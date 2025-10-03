@@ -6,39 +6,129 @@
     <title>Iniciar Sesión - Mercado Fresco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Importar fuente Poppins de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
+        /* Aplicar la nueva tipografía */
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.25rem; /* 36px */
+        }
+
+        h3 {
+            font-size: 1.875rem; /* 30px */
+        }
+
+        /* Fondo general para toda la página con filtro naranja */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('frutas%20y%20verduras/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.2;
+            z-index: -1;
+            /* Aplicar filtro naranja */
+            filter: sepia(0.5) saturate(2) hue-rotate(-10deg);
+        }
+
         .auth-container {
             min-height: calc(100vh - 200px);
         }
+
+        /* Barra de navegación naranja con difuminado mejorado */
+        .nav-header {
+            background-color: #f97316; /* Naranja */
+            position: relative;
+            overflow: visible;
+        }
+
+            .nav-header::after {
+                content: '';
+                position: absolute;
+                bottom: -60px;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                background: linear-gradient(to bottom, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.6) 20%, rgba(249, 115, 22, 0.4) 40%, rgba(249, 115, 22, 0.2) 60%, rgba(249, 115, 22, 0.1) 80%, transparent 100%);
+                z-index: 1;
+                pointer-events: none;
+            }
 
         .auth-tab {
             transition: all 0.3s ease;
         }
 
             .auth-tab.active {
-                background-color: #3f6212;
+                background-color: #f97316;
                 color: white;
             }
 
         .form-input:focus {
             outline: none;
-            border-color: #38a169;
-            box-shadow: 0 0 0 3px rgba(56, 161, 105, 0.2);
+            border-color: #f97316;
+            box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.2);
+        }
+
+        /* Botones de autenticación */
+        .auth-button {
+            background-color: #ea580c; /* Naranja más oscuro */
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+            .auth-button:hover {
+                background-color: #c2410c; /* Naranja más oscuro en hover */
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .auth-button-secondary {
+            background-color: white;
+            color: #ea580c;
+            border: 2px solid #ea580c;
+        }
+
+            .auth-button-secondary:hover {
+                background-color: #fef3c7; /* Amarillo claro */
+            }
+
+        /* Nuevos estilos para el footer */
+        .footer-section {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
         }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header y Navegación -->
-    <header class="bg-green-600 text-white sticky top-0 z-50">
+    <!-- Header y Navegación (simplificado) -->
+    <header class="nav-header text-white sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
                 <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="h-20">
             </div>
 
- 
-
             <div class="flex items-center">
-                <a href="index.html" class="bg-white text-green-600 px-4 py-2 rounded-lg font-bold hover:bg-green-100 transition">
+                <a href="index.html" class="auth-button auth-button-secondary">
                     <i class="fas fa-home mr-2"></i>Volver al Inicio
                 </a>
             </div>
@@ -49,8 +139,8 @@
         <div class="container mx-auto max-w-md">
             <div class="bg-white rounded-lg shadow-md overflow-hidden">
                 <div class="flex border-b">
-                    <button id="login-tab" class="auth-tab active w-1/2 py-4 font-bold text-center">Iniciar Sesión</button>
-                    <button id="register-tab" class="auth-tab w-1/2 py-4 font-bold text-center bg-gray-100">Crear Cuenta</button>
+                    <button id="login-tab" class="auth-tab active w-1/2 py-4 font-bold text-center bg-orange-600 text-white">Iniciar Sesión</button>
+                    <button id="register-tab" class="auth-tab w-1/2 py-4 font-bold text-center bg-orange-100 text-orange-800">Crear Cuenta</button>
                 </div>
 
                 <!-- Formulario de Inicio de Sesión -->
@@ -59,18 +149,18 @@
                     <form id="login-form-data">
                         <div class="mb-4">
                             <label for="login-email" class="block text-gray-700 mb-2">Correo electrónico</label>
-                            <input type="email" id="login-email" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <input type="email" id="login-email" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                         </div>
                         <div class="mb-6">
                             <label for="login-password" class="block text-gray-700 mb-2">Contraseña</label>
-                            <input type="password" id="login-password" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <input type="password" id="login-password" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                         </div>
-                        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition">
+                        <button type="submit" class="w-full bg-orange-600 text-white py-3 rounded-lg font-bold hover:bg-orange-700 transition">
                             Iniciar Sesión
                         </button>
                     </form>
                     <div class="text-center mt-4">
-                        <a href="#" class="text-green-600 hover:underline">¿Olvidaste tu contraseña?</a>
+                        <a href="#" class="text-orange-600 hover:underline">¿Olvidaste tu contraseña?</a>
                     </div>
                 </div>
 
@@ -81,28 +171,28 @@
                         <div class="grid grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label for="register-name" class="block text-gray-700 mb-2">Nombre</label>
-                                <input type="text" id="register-name" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <input type="text" id="register-name" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                             </div>
                             <div>
                                 <label for="register-lastname" class="block text-gray-700 mb-2">Apellido</label>
-                                <input type="text" id="register-lastname" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                                <input type="text" id="register-lastname" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                             </div>
                         </div>
                         <div class="mb-4">
                             <label for="register-phone" class="block text-gray-700 mb-2">Celular</label>
-                            <input type="tel" id="register-phone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <input type="tel" id="register-phone" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                         </div>
                         <div class="mb-4">
                             <label for="register-email" class="block text-gray-700 mb-2">Correo electrónico</label>
-                            <input type="email" id="register-email" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <input type="email" id="register-email" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                         </div>
                         <div class="mb-4">
                             <label for="register-address" class="block text-gray-700 mb-2">Dirección</label>
-                            <textarea id="register-address" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" rows="3" required></textarea>
+                            <textarea id="register-address" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" rows="3" required></textarea>
                         </div>
                         <div class="mb-4">
                             <label for="register-password" class="block text-gray-700 mb-2">Contraseña</label>
-                            <input type="password" id="register-password" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500" required>
+                            <input type="password" id="register-password" class="form-input w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500" required>
                         </div>
                         <div class="mb-6">
                             <label class="block text-gray-700 mb-2">Tipo de cuenta</label>
@@ -120,10 +210,10 @@
                         <div class="mb-4">
                             <label class="flex items-center">
                                 <input type="checkbox" id="terms" class="mr-2" required>
-                                <span class="text-sm">Acepto los <a href="#" class="text-green-600 hover:underline">términos y condiciones</a> y la <a href="#" class="text-green-600 hover:underline">política de privacidad</a></span>
+                                <span class="text-sm">Acepto los <a href="#" class="text-orange-600 hover:underline">términos y condiciones</a> y la <a href="#" class="text-orange-600 hover:underline">política de privacidad</a></span>
                             </label>
                         </div>
-                        <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-lg font-bold hover:bg-green-700 transition">
+                        <button type="submit" class="w-full bg-orange-600 text-white py-3 rounded-lg font-bold hover:bg-orange-700 transition">
                             Crear Cuenta
                         </button>
                     </form>
@@ -132,28 +222,28 @@
         </div>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 px-4">
+    <!-- Footer con nuevo color (igual al index.html) -->
+    <footer class="footer-section py-12 px-4">
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <h3 class="text-xl font-bold mb-4">Mercado Fresco</h3>
                 <p class="mb-4">Tu tienda de confianza para frutas y verduras frescas directamente del campo a tu hogar.</p>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
 
             <div>
                 <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                 <ul class="space-y-2">
-                    <li><a href="index.html" class="hover:text-green-300">Inicio</a></li>
-                    <li><a href="frutas.html" class="hover:text-green-300">Frutas</a></li>
-                    <li><a href="verduras.html" class="hover:text-green-300">Verduras</a></li>
-                    <li><a href="ofertas.html" class="hover:text-green-300">Ofertas</a></li>
-                    <li><a href="nosotros.html" class="hover:text-green-300">Nosotros</a></li>
+                    <li><a href="index.html" class="hover:text-orange-200">Inicio</a></li>
+                    <li><a href="frutas.html" class="hover:text-orange-200">Frutas</a></li>
+                    <li><a href="verduras.html" class="hover:text-orange-200">Verduras</a></li>
+                    <li><a href="ofertas.html" class="hover:text-orange-200">Ofertas</a></li>
+                    <li><a href="nosotros.html" class="hover:text-orange-200">Nosotros</a></li>
                 </ul>
             </div>
 
@@ -172,7 +262,7 @@
             </div>
         </div>
 
-        <div class="container mx-auto mt-8 pt-6 border-t border-gray-700 text-center">
+        <div class="container mx-auto mt-8 pt-6 border-t border-orange-300 text-center">
             <p>&copy; 2023 Mercado Fresco. Todos los derechos reservados.</p>
         </div>
     </footer>
@@ -186,20 +276,20 @@
 
         // Función para cambiar a la pestaña de registro
         function showRegisterTab() {
-            registerTab.classList.add('active', 'bg-green-600', 'text-white');
-            registerTab.classList.remove('bg-gray-100');
-            loginTab.classList.remove('active', 'bg-green-600', 'text-white');
-            loginTab.classList.add('bg-gray-100');
+            registerTab.classList.add('active', 'bg-orange-600', 'text-white');
+            registerTab.classList.remove('bg-orange-100', 'text-orange-800');
+            loginTab.classList.remove('active', 'bg-orange-600', 'text-white');
+            loginTab.classList.add('bg-orange-100', 'text-orange-800');
             registerForm.classList.remove('hidden');
             loginForm.classList.add('hidden');
         }
 
         // Función para cambiar a la pestaña de login
         function showLoginTab() {
-            loginTab.classList.add('active', 'bg-green-600', 'text-white');
-            loginTab.classList.remove('bg-gray-100');
-            registerTab.classList.remove('active', 'bg-green-600', 'text-white');
-            registerTab.classList.add('bg-gray-100');
+            loginTab.classList.add('active', 'bg-orange-600', 'text-white');
+            loginTab.classList.remove('bg-orange-100', 'text-orange-800');
+            registerTab.classList.remove('active', 'bg-orange-600', 'text-white');
+            registerTab.classList.add('bg-orange-100', 'text-orange-800');
             loginForm.classList.remove('hidden');
             registerForm.classList.add('hidden');
         }

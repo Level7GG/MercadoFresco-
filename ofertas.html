@@ -6,11 +6,92 @@
     <title>Ofertas Especiales - Mercado Fresco</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Importar fuente Poppins de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        .product-card:hover {
-            transform: translateY(-5px);
-            transition: transform 0.3s ease;
+        /* Aplicar la nueva tipografía */
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
         }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.25rem; /* 36px */
+        }
+
+        h3 {
+            font-size: 1.875rem; /* 30px */
+        }
+
+        /* Fondo general para toda la página con filtro naranja */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('frutas%20y%20verduras/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.2;
+            z-index: -1;
+            /* Aplicar filtro naranja */
+            filter: sepia(0.5) saturate(2) hue-rotate(-10deg);
+        }
+
+        /* Fondos de secciones con opacidad */
+        .section-bg {
+            position: relative;
+        }
+
+            .section-bg::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                z-index: 0;
+                opacity: 0.6;
+            }
+
+        .section-bg-gray::before {
+            background-color: #ffffff;
+        }
+
+        .section-bg-white::before {
+            background-color: #FF9A3E;
+        }
+
+        .section-bg-green::before {
+            background-color: #ffffff;
+        }
+
+        .section-bg-purple::before {
+            background-color: #FF9A3E;
+        }
+
+        .section-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .product-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+            .product-card:hover {
+                transform: translateY(-5px);
+                transition: transform 0.3s ease;
+            }
 
         .cart-notification {
             display: none;
@@ -20,15 +101,44 @@
             z-index: 1000;
         }
 
+        /* Barra de navegación naranja con difuminado mejorado */
+        .nav-header {
+            background-color: #f97316; /* Naranja */
+            position: relative;
+            overflow: visible;
+        }
+
+            .nav-header::after {
+                content: '';
+                position: absolute;
+                bottom: -60px;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                background: linear-gradient(to bottom, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.6) 20%, rgba(249, 115, 22, 0.4) 40%, rgba(249, 115, 22, 0.2) 60%, rgba(249, 115, 22, 0.1) 80%, transparent 100%);
+                z-index: 1;
+                pointer-events: none;
+            }
+
         .nav-link {
             position: relative;
+            font-weight: 600;
+            font-size: 1.1rem;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
         }
+
+            .nav-link:hover {
+                background-color: rgba(255, 255, 255, 0.2);
+                transform: translateY(-2px);
+            }
 
             .nav-link::after {
                 content: '';
                 position: absolute;
                 width: 0;
-                height: 2px;
+                height: 3px;
                 bottom: -5px;
                 left: 0;
                 background-color: white;
@@ -37,15 +147,6 @@
 
             .nav-link:hover::after {
                 width: 100%;
-            }
-
-        .subcategory-tab {
-            transition: all 0.3s ease;
-        }
-
-            .subcategory-tab.active {
-                background-color: #3f6212;
-                color: white;
             }
 
         .section-hidden {
@@ -68,11 +169,359 @@
             font-size: 0.875rem;
         }
 
+        /* Estilos para el menú one page */
+        .one-page-section {
+            scroll-margin-top: 80px;
+        }
+
+        /* Estilos para la sección de categorías */
+        .categories-section {
+            background: linear-gradient(135deg, #fed7aa, #fdba74);
+            padding: 2rem 0;
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-link {
+            transition: all 0.3s ease;
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .category-link::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #ea580c, #f97316);
+            }
+
+            .category-link:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            }
+
+                .category-link:hover .category-icon {
+                    transform: scale(1.1);
+                }
+
+        .category-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* Botones de autenticación */
+        .auth-button {
+            background-color: #ea580c; /* Naranja más oscuro */
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+            .auth-button:hover {
+                background-color: #c2410c; /* Naranja más oscuro en hover */
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        .auth-button-secondary {
+            background-color: white;
+            color: #ea580c;
+            border: 2px solid #ea580c;
+        }
+
+            .auth-button-secondary:hover {
+                background-color: #fef3c7; /* Amarillo claro */
+            }
+
+        /* Iconos más grandes */
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .cart-icon {
+            width: 50px; /* Aumentamos el tamaño del carrito */
+            height: 50px;
+        }
+
+        /* Ajuste para icono de usuario a la derecha del nombre */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .user-info .user-icon {
+                order: 2; /* Coloca el icono después del nombre */
+            }
+
+        /* Botones de añadir al carrito con tonos naranjas */
+        .add-to-cart {
+            background-color: #f97316;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+            .add-to-cart:hover {
+                background-color: #ea580c;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            }
+
+        /* Nuevos estilos para títulos de sección en cápsula naranja - MÁS GRANDES */
+        .section-title {
+            display: inline-block;
+            background-color: #f97316;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .section-title::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                transition: left 0.5s;
+            }
+
+            .section-title:hover::before {
+                left: 100%;
+            }
+
+        /* Estilos para la sección "¿Por qué elegirnos?" */
+        .benefits-section {
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            box-shadow: 0 10px 25px -3px rgba(0, 0, 0, 0.1);
+            border: 3px solid #fdba74;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .benefits-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 6px;
+                background: linear-gradient(90deg, #ea580c, #f97316, #fdba74);
+            }
+
+        /* Nuevos estilos para el footer */
+        .footer-section {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+        }
+
+        /* Estilos para descripción de productos que solo se muestra al pasar el mouse */
+        .product-description {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.5s ease, margin 0.3s ease;
+            margin: 0;
+        }
+
+        .product-card:hover .product-description {
+            max-height: 100px;
+            opacity: 1;
+            margin-bottom: 1rem;
+        }
+
+        /* Animación para el botón del carrito */
+        @keyframes cartPulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.05);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes cartFloat {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-3px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .cart-button-animated {
+            animation: cartFloat 3s ease-in-out infinite;
+        }
+
+            .cart-button-animated:hover {
+                animation: cartPulse 0.5s ease-in-out;
+            }
+
+        /* NUEVOS ESTILOS PARA EL CARRITO REDISEÑADO */
+        #cart-sidebar {
+            background: linear-gradient(135deg, #fff7ed, #fed7aa);
+            border-left: 4px solid #f97316;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .cart-header {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+            padding: 1.5rem;
+            border-bottom: 3px solid #fdba74;
+        }
+
+        .cart-item {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid #f97316;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .cart-item:hover {
+                transform: translateX(-5px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            }
+
+        .cart-footer {
+            background: white;
+            border-top: 3px solid #fdba74;
+            padding: 1.5rem;
+        }
+
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            background: #fff7ed;
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid #fed7aa;
+        }
+
+        .quantity-btn {
+            background: #f97316;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+            .quantity-btn:hover {
+                background: #ea580c;
+                transform: scale(1.1);
+            }
+
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            border: none;
+            background: transparent;
+            font-weight: bold;
+        }
+
+        .remove-item {
+            color: #e53e3e;
+            transition: all 0.2s ease;
+        }
+
+            .remove-item:hover {
+                color: #c53030;
+                transform: scale(1.2);
+            }
+
+        #checkout-button {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            #checkout-button:hover:not(:disabled) {
+                background: linear-gradient(135deg, #c2410c, #ea580c);
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            }
+
+            #checkout-button:disabled {
+                background: #a0aec0;
+                cursor: not-allowed;
+            }
+
+        .empty-cart-container {
+            text-align: center;
+            padding: 2rem;
+            color: #718096;
+        }
+
+        .empty-cart-icon {
+            font-size: 4rem;
+            color: #fed7aa;
+            margin-bottom: 1rem;
+        }
+
+        /* Estilos específicos para ofertas.html */
         .banner-ofertas {
             position: relative;
             background-image: url('frutas%20y%20verduras/banner%20ofertas.jpg');
             background-size: cover;
             background-position: center;
+            margin-top: -30px; /* Compensar el difuminado de la barra */
+            padding-top: 150px;
+            padding-bottom: 120px;
         }
 
             .banner-ofertas::before {
@@ -82,7 +531,7 @@
                 left: 0;
                 right: 0;
                 bottom: 0;
-                background-color: rgba(0, 0, 0, 0.6); 
+                background-color: rgba(0, 0, 0, 0.4);
                 z-index: 1;
             }
 
@@ -90,18 +539,27 @@
                 position: relative;
                 z-index: 2;
             }
+
+        .subcategory-tab {
+            transition: all 0.3s ease;
+        }
+
+            .subcategory-tab.active {
+                background-color: #f97316 !important;
+                color: white !important;
+            }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header y Navegación -->
-    <header class="bg-green-600 text-white sticky top-0 z-50">
+    <!-- Header y Navegación (igual al frutas.html) -->
+    <header class="nav-header text-white sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center">
                 <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="h-20">
             </div>
 
             <nav class="hidden md:block">
-                <ul class="flex space-x-6">
+                <ul class="flex space-x-4">
                     <li><a href="index.html" class="nav-link">Inicio</a></li>
                     <li><a href="frutas.html" class="nav-link">Frutas</a></li>
                     <li><a href="verduras.html" class="nav-link">Verduras</a></li>
@@ -112,8 +570,26 @@
             </nav>
 
             <div class="flex items-center">
-                <button id="cart-button" class="relative p-2">
-                    <i class="fas fa-shopping-cart text-xl"></i>
+                <div id="user-menu" class="hidden items-center mr-4">
+                    <div class="user-info">
+                        <span id="user-name" class="mr-2"></span>
+                        <img src="frutas%20y%20verduras/persona.png" alt="Usuario" class="user-icon">
+                    </div>
+                    <button id="logout-button" class="auth-button ml-4">
+                        Cerrar Sesión
+                    </button>
+                </div>
+                <div id="auth-buttons" class="flex items-center space-x-2">
+                    <a href="login.html?tab=login" class="auth-button auth-button-secondary">
+                        Iniciar Sesión
+                    </a>
+                    <a href="login.html?tab=register" class="auth-button">
+                        Registrarse
+                    </a>
+                </div>
+
+                <button id="cart-button" class="relative p-2 ml-4 cart-button-animated">
+                    <img src="frutas%20y%20verduras/carrito.png" alt="Carrito" class="cart-icon">
                     <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
                 </button>
 
@@ -122,56 +598,54 @@
                 </button>
             </div>
         </div>
-
-        <!-- Menú móvil -->
-        <div id="mobile-menu" class="hidden md:hidden bg-green-700 px-4 py-2">
-            <ul class="space-y-2">
-                <li><a href="index.html" class="block py-2 hover:bg-green-600 px-2 rounded">Inicio</a></li>
-                <li><a href="frutas.html" class="block py-2 hover:bg-green-600 px-2 rounded">Frutas</a></li>
-                <li><a href="verduras.html" class="block py-2 hover:bg-green-600 px-2 rounded">Verduras</a></li>
-                <li><a href="ofertas.html" class="block py-2 bg-green-800 px-2 rounded">Ofertas</a></li>
-                <li><a href="descuentos.html" class="block py-2 hover:bg-green-600 px-2 rounded">Descuentos</a></li>
-                <li><a href="nosotros.html" class="block py-2 hover:bg-green-600 px-2 rounded">Nosotros</a></li>
-            </ul>
-        </div>
     </header>
 
-    <!-- Carrito de compras -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
-        <div class="p-4 border-b">
+    <!-- Carrito de compras REDISEÑADO (igual al frutas.html) -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="cart-header">
             <div class="flex justify-between items-center">
-                <h2 class="text-xl font-bold">Tu Carrito</h2>
-                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                <h2 class="text-xl font-bold flex items-center">
+                    <i class="fas fa-shopping-cart mr-2"></i> Tu Carrito
+                </h2>
+                <button id="close-cart" class="text-white hover:text-orange-200">
                     <i class="fas fa-times text-xl"></i>
                 </button>
             </div>
         </div>
 
         <div id="cart-items" class="p-4">
-            <p id="empty-cart-message" class="text-gray-500 text-center py-8">Tu carrito está vacío</p>
-            <!-- Los productos del carrito se ańadirán aquí dinámicamente -->
+            <div id="empty-cart-message" class="empty-cart-container">
+                <div class="empty-cart-icon">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Tu carrito está vacío</h3>
+                <p class="text-gray-600">Agrega algunos productos frescos para comenzar</p>
+            </div>
+            <!-- Los productos del carrito se añadirán aquí dinámicamente -->
         </div>
 
-        <div class="p-4 border-t mt-auto">
-            <div class="flex justify-between mb-2">
+        <div class="cart-footer">
+            <div class="flex justify-between items-center mb-4 text-lg font-semibold">
                 <span>Total:</span>
-                <span id="cart-total">$0.00</span>
+                <span id="cart-total" class="text-orange-600">$0</span>
             </div>
-            <button id="checkout-button" class="w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 disabled:opacity-50" disabled>Finalizar Compra</button>
+            <button id="checkout-button" class="w-full py-3 rounded font-bold disabled:opacity-50" disabled>
+                Finalizar Compra
+            </button>
         </div>
     </div>
 
-    <!-- Notificación de producto ańadido -->
+    <!-- Notificación de producto añadido -->
     <div id="cart-notification" class="cart-notification bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg">
-        <p>Producto ańadido al carrito!</p>
+        <p>Producto añadido al carrito!</p>
     </div>
 
     <main>
         <!-- Banner de Ofertas -->
-        <section class="banner-ofertas text-white py-12 px-4">
+        <section class="banner-ofertas text-white px-4">
             <div class="container mx-auto text-center">
-                <h2 class="text-3xl md:text-4xl font-bold mb-4">Ofertas Especiales</h2>
-                <p class="text-lg mb-8">Aprovecha nuestros descuentos en frutas y verduras de la mejor calidad</p>
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Ofertas Especiales</h2>
+                <p class="text-xl mb-8 max-w-2xl mx-auto">Aprovecha nuestros descuentos en frutas y verduras de la mejor calidad</p>
                 <div class="bg-white bg-opacity-20 inline-block px-4 py-2 rounded-full">
                     <i class="fas fa-stopwatch mr-2"></i>Ofertas por tiempo limitado
                 </div>
@@ -182,16 +656,16 @@
         <section class="py-6 bg-white shadow-sm">
             <div class="container mx-auto px-4">
                 <div class="flex flex-wrap justify-center gap-2 md:gap-4">
-                    <button data-category="ofertas-frutas" class="subcategory-tab active bg-green-600 text-white px-4 py-2 rounded-full font-medium">
+                    <button data-category="ofertas-frutas" class="subcategory-tab active bg-orange-600 text-white px-4 py-2 rounded-full font-medium">
                         <i class="fas fa-apple-alt mr-2"></i>Ofertas de Frutas
                     </button>
-                    <button data-category="ofertas-verduras" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                    <button data-category="ofertas-verduras" class="subcategory-tab bg-orange-100 text-orange-800 px-4 py-2 rounded-full font-medium">
                         <i class="fas fa-carrot mr-2"></i>Ofertas de Verduras
                     </button>
-                    <button data-category="combo-ofertas" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                    <button data-category="combo-ofertas" class="subcategory-tab bg-orange-100 text-orange-800 px-4 py-2 rounded-full font-medium">
                         <i class="fas fa-gift mr-2"></i>Combos Especiales
                     </button>
-                    <button data-category="semana" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                    <button data-category="semana" class="subcategory-tab bg-orange-100 text-orange-800 px-4 py-2 rounded-full font-medium">
                         <i class="fas fa-calendar-star mr-2"></i>Ofertas de la Semana
                     </button>
                 </div>
@@ -202,8 +676,8 @@
         <section id="ofertas-frutas" class="category-section py-12 px-4 section-visible">
             <div class="container mx-auto">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-green-800 mb-2">Ofertas de Frutas</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Frutas frescas con descuentos especiales. ˇAprovecha estos precios por tiempo limitado!</p>
+                    <h2 class="section-title">Ofertas de Frutas</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Frutas frescas con descuentos especiales. ¡Aprovecha estos precios por tiempo limitado!</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -213,15 +687,15 @@
                         <img src="frutas%20y%20verduras/platano%20maduro.jpg" alt="Plátanos" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Plátanos Maduros</h3>
-                            <p class="text-gray-600 mb-4">Plátanos perfectamente maduros, ideales para freír o hacer batidos. Dulces y llenos de potasio.</p>
+                            <p class="product-description text-gray-600">Plátanos perfectamente maduros, ideales para freír o hacer batidos. Dulces y llenos de potasio.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$6.800/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg">$6.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$8.800/kg</span>
                                     <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Plátanos Maduros" data-price="6800" data-image="frutas%20y%20verduras/platano%20maduro.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Plátanos Maduros" data-price="6800" data-image="frutas%20y%20verduras/platano%20maduro.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -233,15 +707,15 @@
                         <img src="frutas%20y%20verduras/sandia.jpg" alt="Sandía" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Sandía Sin Semillas</h3>
-                            <p class="text-gray-600 mb-4">Sandía dulce y jugosa, perfecta para días calurosos. Refrescante y con alto contenido de agua.</p>
+                            <p class="product-description text-gray-600">Sandía dulce y jugosa, perfecta para días calurosos. Refrescante y con alto contenido de agua.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$18.000/unidad</span>
+                                    <span class="font-bold text-orange-700 text-lg">$18.000/unidad</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$21.200/unidad</span>
                                     <p class="text-sm text-gray-500">Precio por unidad</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Sandía Sin Semillas" data-price="18000" data-image="frutas%20y%20verduras/sandia.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Sandía Sin Semillas" data-price="18000" data-image="frutas%20y%20verduras/sandia.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -253,15 +727,15 @@
                         <img src="frutas%20y%20verduras/uvas%20verdes.jpg" alt="Uvas" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Uvas Verdes Sin Semillas</h3>
-                            <p class="text-gray-600 mb-4">Uvas dulces y crujientes, perfectas como snack saludable. Cultivadas de forma natural.</p>
+                            <p class="product-description text-gray-600">Uvas dulces y crujientes, perfectas como snack saludable. Cultivadas de forma natural.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$12.800/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg">$12.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$18.000/kg</span>
                                     <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Uvas Verdes Sin Semillas" data-price="12800" data-image="frutas%20y%20verduras/uvas%20verdes.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Uvas Verdes Sin Semillas" data-price="12800" data-image="frutas%20y%20verduras/uvas%20verdes.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -271,11 +745,11 @@
         </section>
 
         <!-- Subsección: Ofertas de Verduras -->
-        <section id="ofertas-verduras" class="category-section py-12 bg-green-50 px-4 section-hidden">
+        <section id="ofertas-verduras" class="category-section py-12 bg-orange-50 px-4 section-hidden">
             <div class="container mx-auto">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-green-800 mb-2">Ofertas de Verduras</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Verduras frescas con descuentos especiales. ˇNo pierdas la oportunidad de ahorrar en productos de calidad!</p>
+                    <h2 class="section-title">Ofertas de Verduras</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Verduras frescas con descuentos especiales. ¡No pierdas la oportunidad de ahorrar en productos de calidad!</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -285,15 +759,15 @@
                         <img src="frutas%20y%20verduras/brocoli.jpg" alt="Brócoli" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Brócoli Fresco</h3>
-                            <p class="text-gray-600 mb-4">Brócoli fresco y crujiente, rico en vitaminas y minerales. Perfecto para salteados y ensaladas.</p>
+                            <p class="product-description text-gray-600">Brócoli fresco y crujiente, rico en vitaminas y minerales. Perfecto para salteados y ensaladas.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$9.600/unidad</span>
+                                    <span class="font-bold text-orange-700 text-lg">$9.600/unidad</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$12.000/unidad</span>
                                     <p class="text-sm text-gray-500">Precio por unidad</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Brócoli Fresco" data-price="9600" data-image="frutas%20y%20verduras/brocoli.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Brócoli Fresco" data-price="9600" data-image="frutas%20y%20verduras/brocoli.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -305,15 +779,15 @@
                         <img src="frutas%20y%20verduras/cebolla%20roja.jpg" alt="Cebollas" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Cebollas Rojas</h3>
-                            <p class="text-gray-600 mb-4">Cebollas rojas dulces, perfectas para ensaladas y guisos. Con propiedades antioxidantes.</p>
+                            <p class="product-description text-gray-600">Cebollas rojas dulces, perfectas para ensaladas y guisos. Con propiedades antioxidantes.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$6.000/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg">$6.000/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$8.000/kg</span>
                                     <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Cebollas Rojas" data-price="6000" data-image="frutas%20y%20verduras/cebolla%20roja.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Cebollas Rojas" data-price="6000" data-image="frutas%20y%20verduras/cebolla%20roja.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -325,15 +799,15 @@
                         <img src="frutas%20y%20verduras/cebolla%20larga.jpg" alt="Cebolla Larga" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Cebolla Larga</h3>
-                            <p class="text-gray-600 mb-4">Cebolla larga ideal para dar sabor a tus platos mientras mejora tu digestión y aporta vitaminas K y C.</p>
+                            <p class="product-description text-gray-600">Cebolla larga ideal para dar sabor a tus platos mientras mejora tu digestión y aporta vitaminas K y C.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$4.250/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg">$4.250/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$5.000/kg</span>
                                     <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Cebolla Larga" data-price="4250" data-image="frutas%20y%20verduras/cebolla%20larga.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Cebolla Larga" data-price="4250" data-image="frutas%20y%20verduras/cebolla%20larga.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -346,7 +820,7 @@
         <section id="combo-ofertas" class="category-section py-12 px-4 section-hidden">
             <div class="container mx-auto">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-green-800 mb-2">Combos Especiales</h2>
+                    <h2 class="section-title">Combos Especiales</h2>
                     <p class="text-gray-600 max-w-2xl mx-auto">Paquetes especiales con todo lo que necesitas para una alimentación saludable con grandes descuentos</p>
                 </div>
 
@@ -357,15 +831,15 @@
                         <img src="frutas%20y%20verduras/ensalada.jpg" alt="Combo Ensalada" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Combo Ensalada Fresca</h3>
-                            <p class="text-gray-600 mb-4">Incluye lechuga, tomate, pepino, cebolla y zanahoria. Todo lo necesario para ensaladas frescas.</p>
+                            <p class="product-description text-gray-600">Incluye lechuga, tomate, pepino, cebolla y zanahoria. Todo lo necesario para ensaladas frescas.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$21.000/combo</span>
+                                    <span class="font-bold text-orange-700 text-lg">$21.000/combo</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$30.000/combo</span>
                                     <p class="text-sm text-gray-500">Ahorras $9.000</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Combo Ensalada Fresca" data-price="21000" data-image="frutas%20y%20verduras/ensalada.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Combo Ensalada Fresca" data-price="21000" data-image="frutas%20y%20verduras/ensalada.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -377,15 +851,15 @@
                         <img src="frutas%20y%20verduras/salteado%20oriental.jpg" alt="Combo Salteado" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Combo Salteado Oriental</h3>
-                            <p class="text-gray-600 mb-4">Incluye pimientos, cebolla, brocoli, zanahoria y champiñones. Perfecto para salteados y woks.</p>
+                            <p class="product-description text-gray-600">Incluye pimientos, cebolla, brocoli, zanahoria y champiñones. Perfecto para salteados y woks.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$24.000/combo</span>
+                                    <span class="font-bold text-orange-700 text-lg">$24.000/combo</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$32.000/combo</span>
                                     <p class="text-sm text-gray-500">Ahorras $8.000</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Combo Salteado Oriental" data-price="24000" data-image="frutas%20y%20verduras/salteado%20oriental.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Combo Salteado Oriental" data-price="24000" data-image="frutas%20y%20verduras/salteado%20oriental.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -397,15 +871,15 @@
                         <img src="frutas%20y%20verduras/combo%20frutas.jpg" alt="Combo Frutal" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Combo Frutal Familiar</h3>
-                            <p class="text-gray-600 mb-4">Incluye manzanas, naranjas, plátanos, uvas y fresas. Perfecto para una semana de snacks saludables.</p>
+                            <p class="product-description text-gray-600">Incluye manzanas, naranjas, plátanos, uvas y fresas. Perfecto para una semana de snacks saludables.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$32.500/combo</span>
+                                    <span class="font-bold text-orange-700 text-lg">$32.500/combo</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$50.000/combo</span>
                                     <p class="text-sm text-gray-500">Ahorras $17.500</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Combo Frutal Familiar" data-price="32500" data-image="frutas%20y%20verduras/combo%20frutas.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Combo Frutal Familiar" data-price="32500" data-image="frutas%20y%20verduras/combo%20frutas.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -415,11 +889,11 @@
         </section>
 
         <!-- Subsección: Ofertas de la Semana -->
-        <section id="semana" class="category-section py-12 bg-green-50 px-4 section-hidden">
+        <section id="semana" class="category-section py-12 bg-orange-50 px-4 section-hidden">
             <div class="container mx-auto">
                 <div class="text-center mb-10">
-                    <h2 class="text-3xl font-bold text-green-800 mb-2">Ofertas de la Semana</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Descuentos especiales disponibles solo esta semana. ˇNo te quedes sin ellos!</p>
+                    <h2 class="section-title">Ofertas de la Semana</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Descuentos especiales disponibles solo esta semana. ¡No te quedes sin ellos!</p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -429,15 +903,15 @@
                         <img src="frutas%20y%20verduras/piña%20golden.jpg" alt="Piña" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Piña Golden Premium</h3>
-                            <p class="text-gray-600 mb-4">Piña dulce con alto contenido en bromelina. Oferta especial por cosecha abundante.</p>
+                            <p class="product-description text-gray-600">Piña dulce con alto contenido en bromelina. Oferta especial por cosecha abundante.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$15.200/unidad</span>
+                                    <span class="font-bold text-orange-700 text-lg">$15.200/unidad</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$25.200/unidad</span>
                                     <p class="text-sm text-gray-500">Precio por unidad</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Piña Golden Premium" data-price="15200" data-image="frutas%20y%20verduras/piña%20golden.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Piña Golden Premium" data-price="15200" data-image="frutas%20y%20verduras/piña%20golden.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -449,15 +923,15 @@
                         <img src="frutas%20y%20verduras/espinaca.jpg" alt="Espinacas" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Espinacas Orgánicas</h3>
-                            <p class="text-gray-600 mb-4">Espinacas cultivadas sin pesticidas, con alto contenido de hierro. Cultivo de temporada.</p>
+                            <p class="product-description text-gray-600">Espinacas cultivadas sin pesticidas, con alto contenido de hierro. Cultivo de temporada.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$11.600/atado</span>
+                                    <span class="font-bold text-orange-700 text-lg">$11.600/atado</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$14.400/atado</span>
                                     <p class="text-sm text-gray-500">Precio por atado</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Espinacas Orgánicas" data-price="11600" data-image="frutas%20y%20verduras/espinaca.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Espinacas Orgánicas" data-price="11600" data-image="frutas%20y%20verduras/espinaca.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -469,15 +943,15 @@
                         <img src="frutas%20y%20verduras/tomates cherry2.jpg" alt="Tomates" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Tomates Cherry Orgánicos</h3>
-                            <p class="text-gray-600 mb-4">Tomates cherry dulces y jugosos, cultivados de forma orgánica. Cosechados en su punto perfecto.</p>
+                            <p class="product-description text-gray-600">Tomates cherry dulces y jugosos, cultivados de forma orgánica. Cosechados en su punto perfecto.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-red-600 text-lg">$13.600/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg">$13.600/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$16.000/kg</span>
                                     <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Tomates Cherry Orgánicos" data-price="13600" data-image="frutas%20y%20verduras/tomates%20cherry2.jpg">
-                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                <button class="add-to-cart" data-product="Tomates Cherry Orgánicos" data-price="13600" data-image="frutas%20y%20verduras/tomates%20cherry2.jpg">
+                                    Añadir
                                 </button>
                             </div>
                         </div>
@@ -491,11 +965,11 @@
             <div class="container mx-auto">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                     <div>
-                        <h2 class="text-3xl font-bold text-green-800 mb-6">¿Cómo funcionan nuestras ofertas?</h2>
+                        <h2 class="text-3xl font-bold text-orange-800 mb-6">¿Cómo funcionan nuestras ofertas?</h2>
                         <div class="space-y-4">
                             <div class="flex items-start">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-clock text-green-600 text-xl"></i>
+                                <div class="bg-orange-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-clock text-orange-600 text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-lg mb-1">Tiempo Limitado</h3>
@@ -503,8 +977,8 @@
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-sync-alt text-green-600 text-xl"></i>
+                                <div class="bg-orange-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-sync-alt text-orange-600 text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-lg mb-1">Rotación Semanal</h3>
@@ -512,8 +986,8 @@
                                 </div>
                             </div>
                             <div class="flex items-start">
-                                <div class="bg-green-100 p-3 rounded-full mr-4">
-                                    <i class="fas fa-truck text-green-600 text-xl"></i>
+                                <div class="bg-orange-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-truck text-orange-600 text-xl"></i>
                                 </div>
                                 <div>
                                     <h3 class="font-semibold text-lg mb-1">Entrega Inmediata</h3>
@@ -530,40 +1004,41 @@
         </section>
 
         <!-- Newsletter -->
-        <section class="py-12 bg-green-50 px-4">
+        <section class="py-12 bg-orange-50 px-4">
             <div class="container mx-auto text-center max-w-2xl">
-                <h2 class="text-3xl font-bold text-green-800 mb-6">No te pierdas nuestras ofertas</h2>
+                <h2 class="text-3xl font-bold text-orange-800 mb-6">No te pierdas nuestras ofertas</h2>
                 <p class="text-gray-600 mb-6">Suscríbete a nuestro newsletter y recibe cada semana las mejores ofertas directamente en tu email.</p>
                 <form class="flex flex-col md:flex-row gap-4 justify-center">
-                    <input type="email" placeholder="Tu correo electrónico" class="px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-green-500 w-full md:w-auto">
-                    <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition">Suscribirme</button>
+                    <input type="email" placeholder="Tu correo electrónico" class="px-4 py-3 rounded-lg border focus:outline-none focus:ring-2 focus:ring-orange-500 w-full md:w-auto">
+                    <button type="submit" class="bg-orange-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-orange-700 transition">Suscribirme</button>
                 </form>
             </div>
         </section>
     </main>
 
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-12 px-4">
+    <!-- Footer con nuevo color (igual al frutas.html) -->
+    <footer class="footer-section py-12 px-4">
         <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
                 <h3 class="text-xl font-bold mb-4">Mercado Fresco</h3>
                 <p class="mb-4">Tu tienda de confianza para frutas y verduras frescas directamente del campo a tu hogar.</p>
                 <div class="flex space-x-4">
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-whatsapp"></i></a>
                 </div>
             </div>
 
             <div>
                 <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
                 <ul class="space-y-2">
-                    <li><a href="index.html" class="hover:text-green-300">Inicio</a></li>
-                    <li><a href="frutas.html" class="hover:text-green-300">Frutas</a></li>
-                    <li><a href="verduras.html" class="hover:text-green-300">Verduras</a></li>
-                    <li><a href="ofertas.html" class="hover:text-green-300 font-bold">Ofertas</a></li>
-                    <li><a href="nosotros.html" class="hover:text-green-300">Nosotros</a></li>
+                    <li><a href="index.html" class="hover:text-orange-200">Inicio</a></li>
+                    <li><a href="frutas.html" class="hover:text-orange-200">Frutas</a></li>
+                    <li><a href="verduras.html" class="hover:text-orange-200">Verduras</a></li>
+                    <li><a href="ofertas.html" class="hover:text-orange-200 font-bold">Ofertas</a></li>
+                    <li><a href="descuentos.html" class="hover:text-orange-200">Descuentos</a></li>
+                    <li><a href="nosotros.html" class="hover:text-orange-200">Nosotros</a></li>
                 </ul>
             </div>
 
@@ -582,7 +1057,7 @@
             </div>
         </div>
 
-        <div class="container mx-auto mt-8 pt-6 border-t border-gray-700 text-center">
+        <div class="container mx-auto mt-8 pt-6 border-t border-orange-300 text-center">
             <p>&copy; 2023 Mercado Fresco. Todos los derechos reservados.</p>
         </div>
     </footer>
@@ -598,14 +1073,7 @@
         const cartTotal = document.getElementById('cart-total');
         const cartCount = document.getElementById('cart-count');
         const checkoutButton = document.getElementById('checkout-button');
-        const mobileMenuButton = document.getElementById('mobile-menu-button');
-        const mobileMenu = document.getElementById('mobile-menu');
         const notification = document.getElementById('cart-notification');
-
-        // Mostrar/ocultar menú móvil
-        mobileMenuButton.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
 
         // Mostrar/ocultar carrito
         cartButton.addEventListener('click', () => {
@@ -622,11 +1090,6 @@
                 cartSidebar.classList.add('translate-x-full');
             }
         });
-
-        // Función para formatear precios en COP
-        function formatPrice(price) {
-            return '$' + price.toLocaleString('es-CO');
-        }
 
         // Añadir productos al carrito
         document.querySelectorAll('.add-to-cart').forEach(button => {
@@ -645,8 +1108,7 @@
                         name: product,
                         price: price,
                         quantity: 1,
-                        unit: 'kg', // Unidad por defecto
-                        image: image // Añadimos la imagen del producto
+                        image: image
                     });
                 }
 
@@ -663,8 +1125,12 @@
             }, 3000);
         }
 
+        // Función para formatear precios en COP
+        function formatPrice(price) {
+            return '$' + price.toLocaleString('es-CO');
+        }
+
         // Actualizar el carrito
-        // Función para actualizar el carrito (corregida)
         function updateCart() {
             // Actualizar contador
             const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
@@ -690,40 +1156,36 @@
                 total += itemTotal;
 
                 const cartItem = document.createElement('div');
-                cartItem.className = 'cart-item flex justify-between items-center py-4 border-b';
+                cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-            <div class="flex items-center">
-                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
-                <div class="ml-3">
-                    <h4 class="font-semibold">${item.name}</h4>
-                    <div class="flex items-center mt-1">
-                        <span class="text-sm mr-2">Precio:</span>
-                        <span class="font-bold">${formatPrice(item.price)}/${item.unit}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col items-end">
-                <div class="flex items-center mb-2">
-                    <button class="decrease-quantity bg-gray-200 rounded-l px-2 py-1" data-index="${index}">-</button>
-                    <input type="number" min="1" value="${item.quantity}" class="quantity-input w-12 text-center py-1 border-y" data-index="${index}">
-                    <button class="increase-quantity bg-gray-200 rounded-r px-2 py-1" data-index="${index}">+</button>
-                </div>
-                <div class="flex items-center">
-                    <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
-                        <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
-                        <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
-                        <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
-                        <option value="atado" ${item.unit === 'atado' ? 'selected' : ''}>atado</option>
-                    </select>
-                </div>
-                <div class="mt-2">
-                    <span class="font-bold">${formatPrice(itemTotal)}</span>
-                    <button class="remove-item text-red-500 ml-2" data-index="${index}">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </div>
-            </div>
-        `;
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start">
+                                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                        <div>
+                                            <h4 class="font-semibold text-lg">${item.name}</h4>
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-sm text-gray-600 mr-2">Precio:</span>
+                                                <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="remove-item text-lg" data-index="${index}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-center mt-3">
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn decrease-quantity" data-index="${index}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
+                                        <button class="quantity-btn increase-quantity" data-index="${index}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <span class="font-bold text-lg">${formatPrice(itemTotal)}</span>
+                                </div>
+                            `;
 
                 cartItems.appendChild(cartItem);
             });
@@ -731,12 +1193,11 @@
             // Actualizar total
             cartTotal.textContent = formatPrice(total);
 
-            // Añadir event listeners a los botones de cantidad y eliminar (corregidos)
+            // Añadir event listeners a los botones de cantidad y eliminar
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    // Prevenir la propagación del evento
                     e.stopPropagation();
-                    const index = parseInt(e.target.dataset.index);
+                    const index = parseInt(e.target.closest('button').dataset.index);
                     cart[index].quantity += 1;
                     updateCart();
                 });
@@ -744,9 +1205,8 @@
 
             document.querySelectorAll('.decrease-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    // Prevenir la propagación del evento
                     e.stopPropagation();
-                    const index = parseInt(e.target.dataset.index);
+                    const index = parseInt(e.target.closest('button').dataset.index);
                     if (cart[index].quantity > 1) {
                         cart[index].quantity -= 1;
                         updateCart();
@@ -756,28 +1216,15 @@
 
             document.querySelectorAll('.remove-item').forEach(button => {
                 button.addEventListener('click', (e) => {
-                    // Prevenir la propagación del evento (IMPORTANTE)
                     e.stopPropagation();
-                    // Obtener el índice correctamente
                     const index = parseInt(e.currentTarget.dataset.index);
                     cart.splice(index, 1);
                     updateCart();
                 });
             });
 
-            document.querySelectorAll('.unit-select').forEach(select => {
-                select.addEventListener('change', (e) => {
-                    // Prevenir la propagación del evento
-                    e.stopPropagation();
-                    const index = parseInt(e.target.dataset.index);
-                    cart[index].unit = e.target.value;
-                    updateCart();
-                });
-            });
-
             document.querySelectorAll('.quantity-input').forEach(input => {
                 input.addEventListener('change', (e) => {
-                    // Prevenir la propagación del evento
                     e.stopPropagation();
                     const index = parseInt(e.target.dataset.index);
                     const newQuantity = parseInt(e.target.value);
@@ -809,13 +1256,13 @@
             tab.addEventListener('click', (e) => {
                 // Remover clase active de todas las pestañas
                 document.querySelectorAll('.subcategory-tab').forEach(t => {
-                    t.classList.remove('active', 'bg-green-600', 'text-white');
-                    t.classList.add('bg-green-100', 'text-green-800');
+                    t.classList.remove('active', 'bg-orange-600', 'text-white');
+                    t.classList.add('bg-orange-100', 'text-orange-800');
                 });
 
                 // Añadir clase active a la pestaña seleccionada
-                e.target.classList.add('active', 'bg-green-600', 'text-white');
-                e.target.classList.remove('bg-green-100', 'text-green-800');
+                e.target.classList.add('active', 'bg-orange-600', 'text-white');
+                e.target.classList.remove('bg-orange-100', 'text-orange-800');
 
                 // Ocultar todas las secciones
                 document.querySelectorAll('.category-section').forEach(section => {
@@ -839,25 +1286,38 @@
             });
         });
 
+        // Verificar estado de autenticación
+        function checkAuthStatus() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const userMenu = document.getElementById('user-menu');
+            const authButtons = document.getElementById('auth-buttons');
+            const userName = document.getElementById('user-name');
+
+            if (currentUser) {
+                // Usuario autenticado
+                userMenu.classList.remove('hidden');
+                authButtons.classList.add('hidden');
+
+                // Mostrar nombre del usuario
+                userName.textContent = `${currentUser.name} ${currentUser.lastname}`;
+            } else {
+                // Usuario no autenticado
+                userMenu.classList.add('hidden');
+                authButtons.classList.remove('hidden');
+            }
+        }
+
+        // Cerrar sesión
+        document.getElementById('logout-button')?.addEventListener('click', function () {
+            localStorage.removeItem('currentUser');
+            checkAuthStatus();
+        });
+
+        // Verificar estado al cargar la página
+        document.addEventListener('DOMContentLoaded', checkAuthStatus);
+
         // Inicializar carrito
         updateCart();
-
-        // Navegación suave para anclas
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const targetId = this.getAttribute('href');
-                if (targetId !== '#') {
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                    }
-                }
-            });
-        });
     </script>
 </body>
 </html>
