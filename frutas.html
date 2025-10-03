@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frutas Frescas - Mercado Fresco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Tus estilos CSS existentes aquí */
+        .product-card:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        .cart-notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        .nav-link {
+            position: relative;
+        }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -5px;
+                left: 0;
+                background-color: white;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+        .subcategory-tab {
+            transition: all 0.3s ease;
+        }
+
+            .subcategory-tab.active {
+                background-color: #3f6212;
+                color: white;
+            }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .section-visible {
+            display: block;
+        }
+
+        .banner-frutas {
+            position: relative;
+            background-image: url('frutas%20y%20verduras/banner%20frutas.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+            .banner-frutas::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 1;
+            }
+
+            .banner-frutas > * {
+                position: relative;
+                z-index: 2;
+            }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header y Navegación -->
+    <header class="bg-green-600 text-white sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="h-20">
+            </div>
+
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="frutas.html" class="nav-link font-bold underline">Frutas</a></li>
+                    <li><a href="verduras.html" class="nav-link">Verduras</a></li>
+                    <li><a href="ofertas.html" class="nav-link">Ofertas</a></li>
+                    <li><a href="descuentos.html" class="nav-link">Descuentos</a></li>
+                    <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center">
+                <button id="cart-button" class="relative p-2">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                </button>
+
+                <button class="md:hidden ml-4" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-green-700 px-4 py-2">
+            <ul class="space-y-2">
+                <li><a href="index.html" class="block py-2 hover:bg-green-600 px-2 rounded">Inicio</a></li>
+                <li><a href="frutas.html" class="block py-2 bg-green-800 px-2 rounded">Frutas</a></li>
+                <li><a href="verduras.html" class="block py-2 hover:bg-green-600 px-2 rounded">Verduras</a></li>
+                <li><a href="ofertas.html" class="block py-2 hover:bg-green-600 px-2 rounded">Ofertas</a></li>
+                <li><a href="descuentos.html" class="block py-2 hover:bg-green-600 px-2 rounded">Descuentos</a></li>
+                <li><a href="nosotros.html" class="block py-2 hover:bg-green-600 px-2 rounded">Nosotros</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Carrito de compras -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="p-4 border-b">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Tu Carrito</h2>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="cart-items" class="p-4">
+            <p id="empty-cart-message" class="text-gray-500 text-center py-8">Tu carrito está vacío</p>
+            <!-- Los productos del carrito se añadirán aquí dinámicamente -->
+        </div>
+
+        <div class="p-4 border-t mt-auto">
+            <div class="flex justify-between mb-2">
+                <span>Total:</span>
+                <span id="cart-total">$0</span>
+            </div>
+            <button id="checkout-button" class="w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 disabled:opacity-50" disabled>Finalizar Compra</button>
+        </div>
+    </div>
+
+    <!-- Notificación de producto añadido -->
+    <div id="cart-notification" class="cart-notification bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-lg">
+        <p>Producto añadido al carrito!</p>
+    </div>
+
+    <main>
+        <!-- Banner de Frutas -->
+        <section class="banner-frutas text-white py-12 px-4">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frutas Frescas</h2>
+                <p class="text-lg mb-8">Disfruta de la mejor selección de frutas naturales y llenas de sabor</p>
+            </div>
+        </section>
+
+        <!-- Navegación de Subcategorías -->
+        <section class="py-6 bg-white shadow-sm">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+                    <button data-category="tropicales" class="subcategory-tab active bg-green-600 text-white px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-umbrella-beach mr-2"></i>Frutas Tropicales
+                    </button>
+                    <button data-category="temporada" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-calendar-alt mr-2"></i>Frutas de Temporada
+                    </button>
+                    <button data-category="citricas" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-lemon mr-2"></i>Frutas Cítricas
+                    </button>
+                    <button data-category="berries" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-seedling mr-2"></i>Berries y Frutos Rojos
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Frutas Tropicales -->
+        <section id="tropicales" class="category-section py-12 px-4 section-visible">
+            <div class="container mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-green-800 mb-2">Frutas Tropicales</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Deliciosas frutas exóticas llenas de nutrientes y sabores intensos que te transportarán a paraísos tropicales</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Producto 1 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/mango.jpg" alt="Mango" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Mango de azucar</h3>
+                            <p class="text-gray-600 mb-4">Mango dulce y jugoso con pulpa firme y fibrosa, ideal para batidos, ensaladas y postres. Rico en vitaminas A y C.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$9.000/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Mango de azucar" data-price="9000" data-image="frutas y verduras/mango.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/piña oro miel.jpg" alt="Piña" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Piña Oro Miel</h3>
+                            <p class="text-gray-600 mb-4">Piña dulce con alto contenido en bromelina, enzima que ayuda a la digestión. Perfecta para jugos, asados o comer natural.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$5.680/unidad</span>
+                                    <p class="text-sm text-gray-500">Precio por unidad</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Piña Oro Miel" data-price="5680" data-image="frutas y verduras/piña oro miel.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/papaya.jpg" alt="Papaya" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Papaya Maradol</h3>
+                            <p class="text-gray-600 mb-4">Papaya de pulpa anaranjada, dulce y con alto contenido en vitaminas. Excelente para desayunos y como digestivo natural.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$11.000/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Papaya Maradol" data-price="11000" data-image="frutas y verduras/papaya.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Frutas de Temporada -->
+        <section id="temporada" class="category-section py-12 bg-green-50 px-4 section-hidden">
+            <div class="container mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-green-800 mb-2">Frutas de Temporada</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Frutas frescas de temporada, cultivadas en el momento óptimo para garantizar su máximo sabor y valor nutricional</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Producto 1 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/fresas.jpg" alt="Fresas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Fresas</h3>
+                            <p class="text-gray-600 mb-4">Fresas jugosas y dulces, perfectas para postres, mermeladas o comer natural. Altas en antioxidantes y vitamina C.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$12.000/Kg</span>
+                                    <p class="text-sm text-gray-500">Precio kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Fresas" data-price="12000" data-image="frutas y verduras/fresas.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/manzana.jpg" alt="Manzanas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Manzanas</h3>
+                            <p class="text-gray-600 mb-4">Manzanas crujientes y dulces, perfectas para snacks saludables, ensaladas y postres. Fuente de fibra y antioxidantes.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$10.500/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Manzanas" data-price="10500" data-image="frutas y verduras/manzana.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/naranjas valencia.jpg" alt="Naranjas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Naranjas Valencia</h3>
+                            <p class="text-gray-600 mb-4">Naranjas jugosas y dulces, excelente fuente de vitamina C. Perfectas para jugos recién exprimidos o comer en gajos.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$4.500/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Naranjas Valencia" data-price="4500" data-image="frutas y verduras/naranjas valencia.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Frutas Cítricas -->
+        <section id="citricas" class="category-section py-12 px-4 section-hidden">
+            <div class="container mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-green-800 mb-2">Frutas Cítricas</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Frutas ácidas y refrescantes, ricas en vitamina C y antioxidantes, perfectas para fortalecer el sistema inmunológico</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Producto 1 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/limon.jpg" alt="Limones" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Limones Tahití</h3>
+                            <p class="text-gray-600 mb-4">Limones verdes jugosos y ácidos, perfectos para aderezos, bebidas y postres. Alto contenido en vitamina C.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$6.500/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Limones Tahití" data-price="6500" data-image="frutas y verduras/limon.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/toronja rosada.jpg" alt="Toronjas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Toronjas Rosadas</h3>
+                            <p class="text-gray-600 mb-4">Toronjas con un equilibrio perfecto entre dulce y ácido, ideales para desayunos y jugos. Ayudan a reducir el colesterol.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$14.000/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Toronjas Rosadas" data-price="14000" data-image="frutas y verduras/toronja rosada.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/mandarina.jpg" alt="Mandarinas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Mandarinas</h3>
+                            <p class="text-gray-600 mb-4">Mandarinas dulces y fáciles de pelar, sin semillas. Perfectas como snack saludable para niños y adultos.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$6.800/kg</span>
+                                    <p class="text-sm text-gray-500">Precio por kilo</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Mandarinas" data-price="6800" data-image="frutas y verduras/mandarina.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Berries y Frutos Rojos -->
+        <section id="berries" class="category-section py-12 bg-green-50 px-4 section-hidden">
+            <div class="container mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-bold text-green-800 mb-2">Berries y Frutos Rojos</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Pequeñas frutas con grandes beneficios, cargadas de antioxidantes y vitaminas esenciales para una salud óptima</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Producto 1 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/arandanos.jpg" alt="Arándanos" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Arándanos Azules</h3>
+                            <p class="text-gray-600 mb-4">Arándanos dulces y antioxidantes, considerados un superalimento. Perfectos para smoothies, postres o comer solos.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$27.000/caja</span>
+                                    <p class="text-sm text-gray-500">Precio por caja de 250g</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Arándanos Azules" data-price="27000" data-image="frutas y verduras/arandanos.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 2 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/frambuesas.jpg" alt="Frambuesas" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Frambuesas Orgánicas</h3>
+                            <p class="text-gray-600 mb-4">Frambuesas delicadas y aromáticas, con un sabor equilibrado entre dulce y ácido. Ideales para mermeladas y postres.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$23.600/caja</span>
+                                    <p class="text-sm text-gray-500">Precio por caja de 200g</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Frambuesas Orgánicas" data-price="23600" data-image="frutas y verduras/frambuesas.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Producto 3 -->
+                    <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="frutas y verduras/moras negras.jpg" alt="Moras" class="w-full h-56 object-cover">
+                        <div class="p-5">
+                            <h3 class="font-bold text-xl mb-2">Moras Negras</h3>
+                            <p class="text-gray-600 mb-4">Moras intensamente dulces con un toque ácido, ricas en antioxidantes. Perfectas para batidos, postres y repostería.</p>
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <span class="font-bold text-green-700 text-lg">$18.000/caja</span>
+                                    <p class="text-sm text-gray-500">Precio por caja de 200g</p>
+                                </div>
+                                <button class="add-to-cart bg-green-600 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-700 transition" data-product="Moras Negras" data-price="18000" data-image="frutas y verduras/moras negras.jpg">
+                                    <i class="fas fa-cart-plus mr-2"></i>Añadir
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Información adicional -->
+        <section class="py-12 bg-white px-4">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+                    <div>
+                        <h2 class="text-3xl font-bold text-green-800 mb-6">Beneficios de las Frutas Frescas</h2>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-heart text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Salud Cardiovascular</h3>
+                                    <p class="text-gray-600">Las frutas ayudan a reducir el riesgo de enfermedades cardíacas y accidentes cerebrovasculares.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-weight text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Control de Peso</h3>
+                                    <p class="text-gray-600">Su alto contenido en fibra y agua te ayuda a sentirte saciado por más tiempo.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="bg-green-100 p-3 rounded-full mr-4">
+                                    <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-semibold text-lg mb-1">Sistema Inmunológico</h3>
+                                    <p class="text-gray-600">Las vitaminas y antioxidantes fortalecen tus defensas naturales.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="frutas y verduras/fresas.jpg" alt="Frutas variadas" class="rounded-lg shadow-md w-full h-64 object-cover">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Consejos de almacenamiento -->
+        <section class="py-12 bg-green-50 px-4">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl font-bold text-green-800 mb-6">Consejos para Conservar tus Frutas</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-snowflake text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Refrigeración adecuada</h3>
+                        <p class="text-gray-600">Algunas frutas como bayas y uvas deben refrigerarse inmediatamente, mientras que otras como plátanos y tomates se conservan mejor a temperatura ambiente.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-box-open text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Almacenamiento apropiado</h3>
+                        <p class="text-gray-600">Guarda las frutas en contenedores ventilados y separa aquellas que producen etileno de las que son sensibles a este gas para evitar una maduración acelerada.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-clock text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="font-semibold text-lg mb-2">Consumo oportuno</h3>
+                        <p class="text-gray-600">Consume las frutas más perecederas primero. Las fresas, frambuesas y moras deben consumirse dentro de los 2-3 días de su compra para disfrutarlas en su mejor estado.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">Mercado Fresco</h3>
+                <p class="mb-4">Tu tienda de confianza para frutas y verduras frescas directamente del campo a tu hogar.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="hover:text-green-300">Inicio</a></li>
+                    <li><a href="frutas.html" class="hover:text-green-300 font-bold">Frutas</a></li>
+                    <li><a href="verduras.html" class="hover:text-green-300">Verduras</a></li>
+                    <li><a href="ofertas.html" class="hover:text-green-300">Ofertas</a></li>
+                    <li><a href="descuentos.html" class="hover:text-green-300">Descuentos</a></li>
+                    <li><a href="nosotros.html" class="hover:text-green-300">Nosotros</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contáctanos</h3>
+                <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Calle Principal #123, Ciudad</p>
+                <p class="mb-2"><i class="fas fa-phone mr-2"></i> (123) 456-7890</p>
+                <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@mercadofresco.com</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Horario de Atención</h3>
+                <p class="mb-2">Lunes a Viernes: 8:00 AM - 8:00 PM</p>
+                <p class="mb-2">Sábados: 9:00 AM - 6:00 PM</p>
+                <p class="mb-2">Domingos: 10:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto mt-8 pt-6 border-t border-gray-700 text-center">
+            <p>&copy; 2023 Mercado Fresco. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartButton = document.getElementById('cart-button');
+        const closeCart = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartItems = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const checkoutButton = document.getElementById('checkout-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const notification = document.getElementById('cart-notification');
+
+        // Mostrar/ocultar menú móvil
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mostrar/ocultar carrito
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+        });
+
+        // Cerrar carrito al hacer clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!cartSidebar.contains(e.target) && e.target !== cartButton && !cartButton.contains(e.target)) {
+                cartSidebar.classList.add('translate-x-full');
+            }
+        });
+
+        // Función para formatear precios en COP
+        function formatPrice(price) {
+            return '$' + price.toLocaleString('es-CO');
+        }
+
+        // Añadir productos al carrito
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const product = e.target.dataset.product;
+                const price = parseFloat(e.target.dataset.price);
+                const image = e.target.dataset.image;
+
+                // Verificar si el producto ya está en el carrito
+                const existingProduct = cart.find(item => item.name === product);
+
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    cart.push({
+                        name: product,
+                        price: price,
+                        quantity: 1,
+                        unit: 'kg', // Unidad por defecto
+                        image: image // Añadimos la imagen del producto
+                    });
+                }
+
+                updateCart();
+                showNotification();
+            });
+        });
+
+        // Mostrar notificación de producto añadido
+        function showNotification() {
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Actualizar el carrito
+        // Función para actualizar el carrito (corregida)
+        function updateCart() {
+            // Actualizar contador
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            // Mostrar/ocultar mensaje de carrito vacío
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                checkoutButton.disabled = true;
+            } else {
+                emptyCartMessage.style.display = 'none';
+                checkoutButton.disabled = false;
+            }
+
+            // Limpiar items anteriores
+            cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
+
+            // Añadir items al carrito
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item flex justify-between items-center py-4 border-b';
+                cartItem.innerHTML = `
+            <div class="flex items-center">
+                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                <div class="ml-3">
+                    <h4 class="font-semibold">${item.name}</h4>
+                    <div class="flex items-center mt-1">
+                        <span class="text-sm mr-2">Precio:</span>
+                        <span class="font-bold">${formatPrice(item.price)}/${item.unit}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-2">
+                    <button class="decrease-quantity bg-gray-200 rounded-l px-2 py-1" data-index="${index}">-</button>
+                    <input type="number" min="1" value="${item.quantity}" class="quantity-input w-12 text-center py-1 border-y" data-index="${index}">
+                    <button class="increase-quantity bg-gray-200 rounded-r px-2 py-1" data-index="${index}">+</button>
+                </div>
+                <div class="flex items-center">
+                    <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
+                        <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                        <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
+                        <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
+                        <option value="atado" ${item.unit === 'atado' ? 'selected' : ''}>atado</option>
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <span class="font-bold">${formatPrice(itemTotal)}</span>
+                    <button class="remove-item text-red-500 ml-2" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+                cartItems.appendChild(cartItem);
+            });
+
+            // Actualizar total
+            cartTotal.textContent = formatPrice(total);
+
+            // Añadir event listeners a los botones de cantidad y eliminar (corregidos)
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    cart[index].quantity += 1;
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity -= 1;
+                        updateCart();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento (IMPORTANTE)
+                    e.stopPropagation();
+                    // Obtener el índice correctamente
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    cart.splice(index, 1);
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.unit-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    cart[index].unit = e.target.value;
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    const newQuantity = parseInt(e.target.value);
+
+                    if (newQuantity > 0) {
+                        cart[index].quantity = newQuantity;
+                        updateCart();
+                    } else {
+                        e.target.value = cart[index].quantity;
+                    }
+                });
+            });
+
+            // GUARDAR CARRITO EN LOCALSTORAGE
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Finalizar compra
+        checkoutButton.addEventListener('click', () => {
+            alert('¡Gracias por tu compra! Total: ' + cartTotal.textContent);
+            cart = [];
+            localStorage.removeItem('cart');
+            updateCart();
+            cartSidebar.classList.add('translate-x-full');
+        });
+
+        // Navegación entre categorías
+        document.querySelectorAll('.subcategory-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Remover clase active de todas las pestañas
+                document.querySelectorAll('.subcategory-tab').forEach(t => {
+                    t.classList.remove('active', 'bg-green-600', 'text-white');
+                    t.classList.add('bg-green-100', 'text-green-800');
+                });
+
+                // Añadir clase active a la pestaña seleccionada
+                e.target.classList.add('active', 'bg-green-600', 'text-white');
+                e.target.classList.remove('bg-green-100', 'text-green-800');
+
+                // Ocultar todas las secciones
+                document.querySelectorAll('.category-section').forEach(section => {
+                    section.classList.add('section-hidden');
+                    section.classList.remove('section-visible');
+                });
+
+                // Mostrar la sección correspondiente
+                const category = e.target.dataset.category;
+                const targetSection = document.getElementById(category);
+                if (targetSection) {
+                    targetSection.classList.remove('section-hidden');
+                    targetSection.classList.add('section-visible');
+
+                    // Desplazamiento suave a la sección
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Inicializar carrito
+        updateCart();
+
+        // Navegación suave para anclas
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

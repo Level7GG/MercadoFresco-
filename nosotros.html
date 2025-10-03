@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nosotros - Mercado Fresco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .nav-link {
+            position: relative;
+        }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                width: 0;
+                height: 2px;
+                bottom: -5px;
+                left: 0;
+                background-color: white;
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after {
+                width: 100%;
+            }
+
+        .subcategory-tab {
+            transition: all 0.3s ease;
+        }
+
+            .subcategory-tab.active {
+                background-color: #3f6212;
+                color: white;
+            }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .section-visible {
+            display: block;
+        }
+
+        .team-member:hover {
+            transform: translateY(-5px);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 30px;
+        }
+
+            .timeline-item::before {
+                content: '';
+                position: absolute;
+                left: 0;
+                top: 8px;
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background-color: #38a169;
+            }
+
+            .timeline-item::after {
+                content: '';
+                position: absolute;
+                left: 5px;
+                top: 20px;
+                width: 2px;
+                height: calc(100% + 10px);
+                background-color: #e2e8f0;
+            }
+
+            .timeline-item:last-child::after {
+                display: none;
+            }
+        .banner-nosotros {
+            position: relative;
+            background-image: url('frutas%20y%20verduras/banner%20nosotros.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+            .banner-nosotros::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background-color: rgba(0, 0, 0, 0.6);
+                z-index: 1;
+            }
+
+            .banner-nosotros > * {
+                position: relative;
+                z-index: 2;
+            }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header y Navegación -->
+    <header class="bg-green-600 text-white sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="h-20">
+            </div>
+
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="index.html" class="nav-link">Inicio</a></li>
+                    <li><a href="frutas.html" class="nav-link">Frutas</a></li>
+                    <li><a href="verduras.html" class="nav-link">Verduras</a></li>
+                    <li><a href="ofertas.html" class="nav-link">Ofertas</a></li>
+                    <li><a href="descuentos.html" class="nav-link">Descuentos</a></li>
+                    <li><a href="nosotros.html" class="nav-link font-bold underline">Nosotros</a></li>
+                </ul>
+            </nav>
+
+            <div class="flex items-center">
+                <button id="cart-button" class="relative p-2">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
+                </button>
+
+                <button class="md:hidden ml-4" id="mobile-menu-button">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-green-700 px-4 py-2">
+            <ul class="space-y-2">
+                <li><a href="index.html" class="block py-2 hover:bg-green-600 px-2 rounded">Inicio</a></li>
+                <li><a href="frutas.html" class="block py-2 hover:bg-green-600 px-2 rounded">Frutas</a></li>
+                <li><a href="verduras.html" class="block py-2 hover:bg-green-600 px-2 rounded">Verduras</a></li>
+                <li><a href="ofertas.html" class="block py-2 hover:bg-green-600 px-2 rounded">Ofertas</a></li>
+                <li><a href="descuentos.html" class="block py-2 hover:bg-green-600 px-2 rounded">Descuentos</a></li>
+                <li><a href="nosotros.html" class="block py-2 bg-green-800 px-2 rounded">Nosotros</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Carrito de compras -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 bg-white shadow-lg z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
+        <div class="p-4 border-b">
+            <div class="flex justify-between items-center">
+                <h2 class="text-xl font-bold">Tu Carrito</h2>
+                <button id="close-cart" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <div id="cart-items" class="p-4">
+            <p id="empty-cart-message" class="text-gray-500 text-center py-8">Tu carrito está vacío</p>
+            <!-- Los productos del carrito se añadirán aquí dinámicamente -->
+        </div>
+
+        <div class="p-4 border-t mt-auto">
+            <div class="flex justify-between mb-2">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button id="checkout-button" class="w-full bg-green-600 text-white py-2 rounded font-bold hover:bg-green-700 disabled:opacity-50" disabled>Finalizar Compra</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Banner Principal -->
+        <section class="banner-nosotros text-white py-12 px-4">
+            <div class="absolute inset-0 bg-black opacity-40"></div>
+            <div class="container mx-auto text-center relative z-10">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">Mercado Fresco</h1>
+                <p class="text-xl md:text-2xl mb-8">Más fresco no lo podrás encontrar en otro lugar.</p>
+                <a href="#historia" class="bg-white text-green-700 px-8 py-3 rounded-full font-bold hover:bg-green-100 transition duration-300">
+                    Conoce nuestra historia
+                </a>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-gray-50 to-transparent"></div>
+        </section>
+
+        <!-- Navegación de Subcategorías -->
+        <section class="py-6 bg-white shadow-sm">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-wrap justify-center gap-2 md:gap-4">
+                    <button data-category="historia" class="subcategory-tab active bg-green-600 text-white px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-history mr-2"></i>Nuestra Historia
+                    </button>
+                    <button data-category="valores" class="subcategory-tab bg-green-100 text-green-800 px-4 py-2 rounded-full font-medium">
+                        <i class="fas fa-heart mr-2"></i>Nuestros Valores
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Nuestra Historia (SIMPLIFICADA) -->
+        <section id="historia" class="category-section py-12 px-4 section-visible">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-800 mb-4">Nuestra Historia</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Desde nuestros humildes comienzos hasta convertirnos en tu tienda de confianza para productos frescos y naturales</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
+                    <div>
+                        <h3 class="text-2xl font-bold text-green-800 mb-4">Cómo comenzó todo</h3>
+                        <p class="text-gray-600 mb-4">Mercado Fresco nació en 2010 de la pasión por llevar productos frescos y de calidad directamente del campo a las mesas de nuestras comunidades. Todo comenzó con un pequeño puesto en el mercado local donde ofrecíamos frutas y verduras seleccionadas personalmente.</p>
+                        <p class="text-gray-600">Lo que empezó como un sueño familiar se ha convertido en una empresa comprometida con la calidad, la sostenibilidad y el servicio excepcional a nuestros clientes.</p>
+                    </div>
+                    <div>
+                        <img src="frutas y verduras/nosotros.jpg" alt="nosotros" class="rounded-lg shadow-md w-full h-64 object-cover">
+                    </div>
+                </div>
+
+                <!-- Línea de tiempo simplificada -->
+                <div class="mb-16">
+                    <h3 class="text-2xl font-bold text-green-800 mb-6 text-center">Nuestra Trayectoria</h3>
+                    <div class="max-w-3xl mx-auto">
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold mb-2">2010 - Los Inicios</h4>
+                            <p class="text-gray-600">Abrimos nuestro primer puesto en el mercado local con productos seleccionados personalmente de agricultores de la región.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold mb-2">2013 - Primera Tienda Física</h4>
+                            <p class="text-gray-600">Inauguramos nuestra primera tienda física, ampliando nuestra variedad de productos y servicios.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold mb-2">2019 - Tienda Online</h4>
+                            <p class="text-gray-600">Lanzamos nuestra plataforma online para llevar nuestros productos frescos directamente a tu hogar.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h4 class="text-xl font-semibold mb-2">2023 - Hoy</h4>
+                            <p class="text-gray-600">Continuamos creciendo manteniendo nuestro compromiso con la calidad y frescura.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subsección: Nuestros Valores (MANTENIDA COMO ESTÁ) -->
+        <section id="valores" class="category-section py-12 bg-green-50 px-4 section-hidden">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-800 mb-4">Nuestros Valores</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto">Los principios que guían cada decisión que tomamos y cada producto que ofrecemos</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-leaf text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Calidad Superior</h3>
+                        <p class="text-gray-600 text-center">Seleccionamos cuidadosamente cada producto para garantizar la máxima frescura, sabor y valor nutricional.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-truck text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Frescura Garantizada</h3>
+                        <p class="text-gray-600 text-center">Nuestros productos van directamente del campo a tu mesa en el menor tiempo posible.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-recycle text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Sostenibilidad</h3>
+                        <p class="text-gray-600 text-center">Trabajamos con agricultores que practican métodos sostenibles y utilizamos empaques ecológicos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-hands-helping text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Apoyo Local</h3>
+                        <p class="text-gray-600 text-center">Priorizamos el trabajo con productores locales para fortalecer nuestra comunidad y reducir la huella de carbono.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Transparencia</h3>
+                        <p class="text-gray-600 text-center">Mantenemos una comunicación clara sobre el origen de nuestros productos y nuestros procesos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md">
+                        <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-smile text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-center mb-3">Satisfacción del Cliente</h3>
+                        <p class="text-gray-600 text-center">Tu satisfacción es nuestra prioridad. Trabajamos constantemente para superar tus expectativas.</p>
+                    </div>
+                </div>
+
+                <!-- Compromiso con la comunidad -->
+                <div class="bg-white rounded-lg shadow-md p-8 mb-16">
+                    <h3 class="text-2xl font-bold text-green-800 mb-6 text-center">Nuestro Compromiso con la Comunidad</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Compromiso comunitario" class="rounded-lg w-full h-64 object-cover">
+                        </div>
+                        <div>
+                            <p class="text-gray-600 mb-4">En Mercado Fresco creemos en devolver a la comunidad que nos ha apoyado a lo largo de los años. Por eso:</p>
+                            <ul class="list-disc list-inside text-gray-600 space-y-2">
+                                <li>Donamos productos frescos semanalmente a bancos de alimentos locales</li>
+                                <li>Participamos en programas educativos sobre nutrición en escuelas</li>
+                                <li>Organizamos ferias agrícolas para promover a productores locales</li>
+                                <li>Ofrecemos descuentos especiales para adultos mayores y familias en situación vulnerable</li>
+                                <li>Implementamos programas de reciclaje y compostaje en nuestras instalaciones</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Certificaciones -->
+                <div>
+                    <h3 class="text-2xl font-bold text-green-800 mb-6 text-center">Certificaciones y Reconocimientos</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-award text-green-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Certificación Orgánica</h4>
+                            <p class="text-gray-600">Nuestros productos orgánicos están certificados por organismos internacionales.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-medal text-green-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Premio a la Calidad</h4>
+                            <p class="text-gray-600">Reconocidos por tres años consecutivos por la Asociación de Comerciantes de Alimentos.</p>
+                        </div>
+                        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-handshake text-green-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-lg font-semibold mb-2">Comercio Justo</h4>
+                            <p class="text-gray-600">Certificación que garantiza precios justos para nuestros productores asociados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto -->
+        <section class="py-16 bg-white px-4">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-green-800 mb-4">Contáctanos</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Estamos aquí para responder tus preguntas y escuchar tus sugerencias</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                    <div>
+                        <form class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Nombre completo</label>
+                                <input type="text" id="name" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Correo electrónico</label>
+                                <input type="email" id="email" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            </div>
+                            <div>
+                                <label for="message" class="block text-sm font-medium text-gray-700 mb-1">Mensaje</label>
+                                <textarea id="message" rows="5" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                            </div>
+                            <button type="submit" class="bg-green-600 text-white px-6 py-3 rounded-lg font-bold hover:bg-green-700 transition w-full">Enviar mensaje</button>
+                        </form>
+                    </div>
+                    <div>
+                        <div class="bg-green-50 p-6 rounded-lg">
+                            <h3 class="text-xl font-semibold mb-4">Información de contacto</h3>
+                            <div class="space-y-4">
+                                <div class="flex items-start">
+                                    <i class="fas fa-map-marker-alt text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Dirección</h4>
+                                        <p class="text-gray-600">Calle Principal #123, Ciudad</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-phone text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Teléfono</h4>
+                                        <p class="text-gray-600">(123) 456-7890</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-envelope text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Email</h4>
+                                        <p class="text-gray-600">info@mercadofresco.com</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-clock text-green-600 mt-1 mr-3"></i>
+                                    <div>
+                                        <h4 class="font-semibold">Horario de atención</h4>
+                                        <p class="text-gray-600">Lunes a Viernes: 8:00 AM - 8:00 PM</p>
+                                        <p class="text-gray-600">Sábados: 9:00 AM - 6:00 PM</p>
+                                        <p class="text-gray-600">Domingos: 10:00 AM - 4:00 PM</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12 px-4">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">Mercado Fresco</h3>
+                <p class="mb-4">Tu tienda de confianza para frutas y verduras frescas directamente del campo a tu hogar.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="hover:text-green-300">Inicio</a></li>
+                    <li><a href="frutas.html" class="hover:text-green-300">Frutas</a></li>
+                    <li><a href="verduras.html" class="hover:text-green-300">Verduras</a></li>
+                    <li><a href="ofertas.html" class="hover:text-green-300">Ofertas</a></li>
+                    <li><a href="descuentos.html" class="hover:text-green-300">Descuentos</a></li>
+                    <li><a href="nosotros.html" class="hover:text-green-300 font-bold">Nosotros</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contáctanos</h3>
+                <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Calle Principal #123, Ciudad</p>
+                <p class="mb-2"><i class="fas fa-phone mr-2"></i> (123) 456-7890</p>
+                <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@mercadofresco.com</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Horario de Atención</h3>
+                <p class="mb-2">Lunes a Viernes: 8:00 AM - 8:00 PM</p>
+                <p class="mb-2">Sábados: 9:00 AM - 6:00 PM</p>
+                <p class="mb-2">Domingos: 10:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto mt-8 pt-6 border-t border-gray-700 text-center">
+            <p>&copy; 2023 Mercado Fresco. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Variables globales
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartButton = document.getElementById('cart-button');
+        const closeCart = document.getElementById('close-cart');
+        const cartSidebar = document.getElementById('cart-sidebar');
+        const cartItems = document.getElementById('cart-items');
+        const emptyCartMessage = document.getElementById('empty-cart-message');
+        const cartTotal = document.getElementById('cart-total');
+        const cartCount = document.getElementById('cart-count');
+        const checkoutButton = document.getElementById('checkout-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const notification = document.getElementById('cart-notification');
+
+        // Mostrar/ocultar menú móvil
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Mostrar/ocultar carrito
+        cartButton.addEventListener('click', () => {
+            cartSidebar.classList.remove('translate-x-full');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartSidebar.classList.add('translate-x-full');
+        });
+
+        // Cerrar carrito al hacer clic fuera de él
+        document.addEventListener('click', (e) => {
+            if (!cartSidebar.contains(e.target) && e.target !== cartButton && !cartButton.contains(e.target)) {
+                cartSidebar.classList.add('translate-x-full');
+            }
+        });
+
+        // Función para formatear precios en COP
+        function formatPrice(price) {
+            return '$' + price.toLocaleString('es-CO');
+        }
+
+        // Añadir productos al carrito
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const product = e.target.dataset.product;
+                const price = parseFloat(e.target.dataset.price);
+
+                // Verificar si el producto ya está en el carrito
+                const existingProduct = cart.find(item => item.name === product);
+
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    cart.push({
+                        name: product,
+                        price: price,
+                        quantity: 1,
+                        unit: 'kg' // Unidad por defecto
+                    });
+                }
+
+                updateCart();
+                showNotification();
+            });
+        });
+
+        // Mostrar notificación de producto añadido
+        function showNotification() {
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
+
+        // Actualizar el carrito
+        // Función para actualizar el carrito (corregida)
+        function updateCart() {
+            // Actualizar contador
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+
+            // Mostrar/ocultar mensaje de carrito vacío
+            if (cart.length === 0) {
+                emptyCartMessage.style.display = 'block';
+                checkoutButton.disabled = true;
+            } else {
+                emptyCartMessage.style.display = 'none';
+                checkoutButton.disabled = false;
+            }
+
+            // Limpiar items anteriores
+            cartItems.querySelectorAll('.cart-item').forEach(item => item.remove());
+
+            // Añadir items al carrito
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item flex justify-between items-center py-4 border-b';
+                cartItem.innerHTML = `
+            <div class="flex items-center">
+                <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded">
+                <div class="ml-3">
+                    <h4 class="font-semibold">${item.name}</h4>
+                    <div class="flex items-center mt-1">
+                        <span class="text-sm mr-2">Precio:</span>
+                        <span class="font-bold">${formatPrice(item.price)}/${item.unit}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex flex-col items-end">
+                <div class="flex items-center mb-2">
+                    <button class="decrease-quantity bg-gray-200 rounded-l px-2 py-1" data-index="${index}">-</button>
+                    <input type="number" min="1" value="${item.quantity}" class="quantity-input w-12 text-center py-1 border-y" data-index="${index}">
+                    <button class="increase-quantity bg-gray-200 rounded-r px-2 py-1" data-index="${index}">+</button>
+                </div>
+                <div class="flex items-center">
+                    <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
+                        <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                        <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
+                        <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
+                        <option value="atado" ${item.unit === 'atado' ? 'selected' : ''}>atado</option>
+                    </select>
+                </div>
+                <div class="mt-2">
+                    <span class="font-bold">${formatPrice(itemTotal)}</span>
+                    <button class="remove-item text-red-500 ml-2" data-index="${index}">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+
+                cartItems.appendChild(cartItem);
+            });
+
+            // Actualizar total
+            cartTotal.textContent = formatPrice(total);
+
+            // Añadir event listeners a los botones de cantidad y eliminar (corregidos)
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    cart[index].quantity += 1;
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity -= 1;
+                        updateCart();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Prevenir la propagación del evento (IMPORTANTE)
+                    e.stopPropagation();
+                    // Obtener el índice correctamente
+                    const index = parseInt(e.currentTarget.dataset.index);
+                    cart.splice(index, 1);
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.unit-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    cart[index].unit = e.target.value;
+                    updateCart();
+                });
+            });
+
+            document.querySelectorAll('.quantity-input').forEach(input => {
+                input.addEventListener('change', (e) => {
+                    // Prevenir la propagación del evento
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    const newQuantity = parseInt(e.target.value);
+
+                    if (newQuantity > 0) {
+                        cart[index].quantity = newQuantity;
+                        updateCart();
+                    } else {
+                        e.target.value = cart[index].quantity;
+                    }
+                });
+            });
+
+            // GUARDAR CARRITO EN LOCALSTORAGE
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Finalizar compra
+        checkoutButton.addEventListener('click', () => {
+            alert('¡Gracias por tu compra! Total: ' + cartTotal.textContent);
+            cart = [];
+            localStorage.removeItem('cart');
+            updateCart();
+            cartSidebar.classList.add('translate-x-full');
+        });
+
+        // Navegación entre categorías
+        document.querySelectorAll('.subcategory-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                // Remover clase active de todas las pestañas
+                document.querySelectorAll('.subcategory-tab').forEach(t => {
+                    t.classList.remove('active', 'bg-green-600', 'text-white');
+                    t.classList.add('bg-green-100', 'text-green-800');
+                });
+
+                // Añadir clase active a la pestaña seleccionada
+                e.target.classList.add('active', 'bg-green-600', 'text-white');
+                e.target.classList.remove('bg-green-100', 'text-green-800');
+
+                // Ocultar todas las secciones
+                document.querySelectorAll('.category-section').forEach(section => {
+                    section.classList.add('section-hidden');
+                    section.classList.remove('section-visible');
+                });
+
+                // Mostrar la sección correspondiente
+                const category = e.target.dataset.category;
+                const targetSection = document.getElementById(category);
+                if (targetSection) {
+                    targetSection.classList.remove('section-hidden');
+                    targetSection.classList.add('section-visible');
+
+                    // Desplazamiento suave a la sección
+                    window.scrollTo({
+                        top: targetSection.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Inicializar carrito
+        updateCart();
+
+        // Navegación suave para anclas
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId !== '#') {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
