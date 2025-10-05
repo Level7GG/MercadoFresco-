@@ -216,108 +216,6 @@
             transition: transform 0.3s ease;
         }
 
-        /* Botones de autenticación */
-        .auth-button {
-            background-color: #ea580c; /* Naranja más oscuro */
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-            .auth-button:hover {
-                background-color: #c2410c; /* Naranja más oscuro en hover */
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-
-        .auth-button-secondary {
-            background-color: white;
-            color: #ea580c;
-            border: 2px solid #ea580c;
-        }
-
-            .auth-button-secondary:hover {
-                background-color: #fef3c7; /* Amarillo claro */
-            }
-
-        /* Iconos más grandes */
-        .user-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .cart-icon {
-            width: 50px; /* Aumentamos el tamaño del carrito */
-            height: 50px;
-        }
-
-        /* Ajuste para icono de usuario a la derecha del nombre */
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-            .user-info .user-icon {
-                order: 2; /* Coloca el icono después del nombre */
-            }
-
-        /* Botones de añadir al carrito con tonos naranjas */
-        .add-to-cart {
-            background-color: #f97316;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 6px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-            .add-to-cart:hover {
-                background-color: #ea580c;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            }
-
-        /* Nuevos estilos para títulos de sección en cápsula naranja - MÁS GRANDES */
-        .section-title {
-            display: inline-block;
-            background-color: #f97316;
-            color: white;
-            padding: 16px 40px;
-            border-radius: 40px;
-            font-weight: bold;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-            font-size: 2.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            position: relative;
-            overflow: hidden;
-        }
-
-            .section-title::before {
-                content: '';
-                position: absolute;
-                top: 0;
-                left: -100%;
-                width: 100%;
-                height: 100%;
-                background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                transition: left 0.5s;
-            }
-
-            .section-title:hover::before {
-                left: 100%;
-            }
-
         /* Estilos para la sección "¿Por qué elegirnos?" */
         .benefits-section {
             background: linear-gradient(135deg, #fff7ed, #fed7aa);
@@ -548,14 +446,377 @@
                 background-color: #f97316 !important;
                 color: white !important;
             }
+
+        /* NUEVOS ESTILOS RESPONSIVE - APLICADOS DESDE INDEX.HTML */
+
+        /* LOGO RESPONSIVE - CORREGIDO Y MÁS PEQUEÑO EN MÓVILES */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 70px; /* Tamaño base para desktop */
+            width: auto;
+            object-fit: contain;
+        }
+
+        @media (max-width: 1024px) {
+            .logo-img {
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 50px; /* Reducido significativamente para tablets */
+            }
+        }
+
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 35px; /* Más pequeño en móviles */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 30px; /* Aún más pequeño en móviles pequeños */
+            }
+        }
+
+        /* CARRITO RESPONSIVE - CORREGIDO */
+        .cart-icon {
+            width: 50px; /* Tamaño para desktop */
+            height: 50px;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .cart-icon {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .cart-icon {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .cart-icon {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* BOTONES DE AUTENTICACIÓN - CORREGIDOS */
+        .auth-button {
+            background-color: #ea580c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .auth-button {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .auth-button {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-button {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+
+            .auth-buttons-container {
+                gap: 0.25rem !important;
+            }
+        }
+
+        .auth-button-secondary {
+            background-color: white;
+            color: #ea580c;
+            border: 2px solid #ea580c;
+        }
+
+            .auth-button-secondary:hover {
+                background-color: #fef3c7; /* Amarillo claro */
+            }
+
+        /* BOTÓN DE CERRAR SESIÓN - CORREGIDO */
+        #logout-button {
+            font-size: 0.9rem;
+            padding: 6px 12px;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            #logout-button {
+                font-size: 0.85rem;
+                padding: 5px 10px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            #logout-button {
+                font-size: 0.8rem;
+                padding: 4px 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #logout-button {
+                font-size: 0.75rem;
+                padding: 3px 6px;
+            }
+        }
+
+        /* MENÚ DE USUARIO - CORREGIDO */
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .user-info {
+                gap: 6px;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .user-info {
+                gap: 4px;
+            }
+
+            #user-name {
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-info {
+                flex-direction: column;
+                align-items: flex-end;
+                gap: 2px;
+            }
+
+            #user-name {
+                font-size: 0.8rem;
+                text-align: right;
+                max-width: 80px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+
+        .user-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        @media (max-width: 768px) {
+            .user-icon {
+                width: 35px;
+                height: 35px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .user-icon {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* CONTENEDOR DE BOTONES - CORREGIDO */
+        .nav-buttons-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons-container {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-buttons-container {
+                gap: 0.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-buttons-container {
+                gap: 0.3rem;
+            }
+        }
+
+        /* CONTENEDOR DE BOTONES DE AUTENTICACIÓN - CORREGIDO */
+        .auth-buttons-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .auth-buttons-container {
+                gap: 0.4rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .auth-buttons-container {
+                gap: 0.3rem;
+            }
+        }
+
+        /* BOTÓN DEL MENÚ MÓVIL - CORREGIDO */
+        .mobile-menu-button {
+            margin-left: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        @media (max-width: 480px) {
+            .mobile-menu-button {
+                margin-left: 0.25rem;
+                padding: 0.4rem;
+            }
+        }
+
+        /* MENÚ MÓVIL - CORREGIDO */
+        .mobile-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background-color: #f97316;
+            z-index: 40;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .mobile-menu.open {
+                display: block;
+            }
+
+            .mobile-menu ul {
+                padding: 1rem;
+            }
+
+            .mobile-menu li {
+                margin-bottom: 0.5rem;
+            }
+
+            .mobile-menu .nav-link {
+                display: block;
+                padding: 0.75rem 1rem;
+                border-radius: 6px;
+            }
+
+        /* Botones de añadir al carrito con tonos naranjas */
+        .add-to-cart {
+            background-color: #f97316;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 640px) {
+            .add-to-cart {
+                padding: 6px 12px;
+                font-size: 0.8rem;
+            }
+        }
+
+        .add-to-cart:hover {
+            background-color: #ea580c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Nuevos estilos para títulos de sección en cápsula naranja - MÁS GRANDES */
+        .section-title {
+            display: inline-block;
+            background-color: #f97316;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 40px;
+            font-weight: bold;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 2rem;
+                padding: 12px 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 1.5rem;
+                padding: 10px 20px;
+                margin-bottom: 1.5rem;
+            }
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .section-title:hover::before {
+            left: 100%;
+        }
     </style>
 </head>
 <body class="bg-gray-50">
-    <!-- Header y Navegación (igual al index) -->
+    <!-- Header y Navegación ACTUALIZADO (igual al index mejorado) -->
     <header class="nav-header text-white sticky top-0 z-50">
         <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <div class="flex items-center">
-                <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="h-20">
+            <div class="logo-container">
+                <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="logo-img">
             </div>
 
             <nav class="hidden md:block">
@@ -569,17 +830,17 @@
                 </ul>
             </nav>
 
-            <div class="flex items-center">
-                <div id="user-menu" class="hidden items-center mr-4">
+            <div class="nav-buttons-container">
+                <div id="user-menu" class="hidden items-center">
                     <div class="user-info">
                         <span id="user-name" class="mr-2"></span>
                         <img src="frutas%20y%20verduras/persona.png" alt="Usuario" class="user-icon">
                     </div>
-                    <button id="logout-button" class="auth-button ml-4">
+                    <button id="logout-button" class="auth-button ml-2">
                         Cerrar Sesión
                     </button>
                 </div>
-                <div id="auth-buttons" class="flex items-center space-x-2">
+                <div id="auth-buttons" class="auth-buttons-container">
                     <a href="login.html?tab=login" class="auth-button auth-button-secondary">
                         Iniciar Sesión
                     </a>
@@ -588,15 +849,27 @@
                     </a>
                 </div>
 
-                <button id="cart-button" class="relative p-2 ml-4 cart-button-animated">
+                <button id="cart-button" class="relative p-2 cart-button-animated">
                     <img src="frutas%20y%20verduras/carrito.png" alt="Carrito" class="cart-icon">
                     <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs">0</span>
                 </button>
 
-                <button class="md:hidden ml-4" id="mobile-menu-button">
+                <button class="md:hidden mobile-menu-button" id="mobile-menu-button">
                     <i class="fas fa-bars text-xl"></i>
                 </button>
             </div>
+        </div>
+
+        <!-- Menú móvil -->
+        <div class="mobile-menu md:hidden" id="mobile-menu">
+            <ul>
+                <li><a href="index.html" class="nav-link">Inicio</a></li>
+                <li><a href="frutas.html" class="nav-link font-bold underline">Frutas</a></li>
+                <li><a href="verduras.html" class="nav-link">Verduras</a></li>
+                <li><a href="ofertas.html" class="nav-link">Ofertas</a></li>
+                <li><a href="descuentos.html" class="nav-link">Descuentos</a></li>
+                <li><a href="nosotros.html" class="nav-link">Nosotros</a></li>
+            </ul>
         </div>
     </header>
 
@@ -1064,6 +1337,8 @@
         const cartTotal = document.getElementById('cart-total');
         const cartCount = document.getElementById('cart-count');
         const checkoutButton = document.getElementById('checkout-button');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
         const notification = document.getElementById('cart-notification');
 
         // Mostrar/ocultar carrito
@@ -1080,6 +1355,18 @@
             if (!cartSidebar.contains(e.target) && e.target !== cartButton && !cartButton.contains(e.target)) {
                 cartSidebar.classList.add('translate-x-full');
             }
+        });
+
+        // Mostrar/ocultar menú móvil
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Cerrar menú móvil al hacer clic en un enlace
+        document.querySelectorAll('.mobile-menu .nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('open');
+            });
         });
 
         // Añadir productos al carrito
@@ -1149,34 +1436,34 @@
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-                            <div class="flex justify-between items-start">
-                                <div class="flex items-start">
-                                    <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
-                                    <div>
-                                        <h4 class="font-semibold text-lg">${item.name}</h4>
-                                        <div class="flex items-center mt-1">
-                                            <span class="text-sm text-gray-600 mr-2">Precio:</span>
-                                            <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start">
+                                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                        <div>
+                                            <h4 class="font-semibold text-lg">${item.name}</h4>
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-sm text-gray-600 mr-2">Precio:</span>
+                                                <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <button class="remove-item text-lg" data-index="${index}">
-                                    <i class="fas fa-times"></i>
-                                </button>
-                            </div>
-                            <div class="flex justify-between items-center mt-3">
-                                <div class="quantity-controls">
-                                    <button class="quantity-btn decrease-quantity" data-index="${index}">
-                                        <i class="fas fa-minus"></i>
-                                    </button>
-                                    <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
-                                    <button class="quantity-btn increase-quantity" data-index="${index}">
-                                        <i class="fas fa-plus"></i>
+                                    <button class="remove-item text-lg" data-index="${index}">
+                                        <i class="fas fa-times"></i>
                                     </button>
                                 </div>
-                                <span class="font-bold text-lg">${formatPrice(itemTotal)}</span>
-                            </div>
-                        `;
+                                <div class="flex justify-between items-center mt-3">
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn decrease-quantity" data-index="${index}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
+                                        <button class="quantity-btn increase-quantity" data-index="${index}">
+                                            <i class="fas fa-plus"></i>
+                                        </button>
+                                    </div>
+                                    <span class="font-bold text-lg">${formatPrice(itemTotal)}</span>
+                                </div>
+                            `;
 
                 cartItems.appendChild(cartItem);
             });
