@@ -807,6 +807,24 @@
                 background-color: #f97316 !important;
                 color: white !important;
             }
+
+        /* Estilos para selectores de unidad en productos */
+        .unit-selector {
+            background-color: #fef3c7;
+            color: #ea580c;
+            border: 1px solid #fdba74;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+            .unit-selector:focus {
+                outline: none;
+                border-color: #f97316;
+            }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -871,7 +889,7 @@
         </div>
     </header>
 
-    <!-- Carrito de compras REDISEÑADO -->
+    <!-- Carrito de compras ACTUALIZADO con sistema de unidades -->
     <div id="cart-sidebar" class="fixed top-0 right-0 h-full w-full md:w-96 z-50 transform translate-x-full transition-transform duration-300 overflow-y-auto">
         <div class="cart-header">
             <div class="flex justify-between items-center">
@@ -946,20 +964,25 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Producto 1 - Manzanas -->
+                    <!-- Producto 1 - Manzanas Fuji -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">25% OFF</div>
                         <img src="frutas%20y%20verduras/manzana.jpg" alt="Manzanas" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Manzanas Fuji</h3>
                             <p class="product-description text-gray-600">Manzanas crujientes y dulces, perfectas para snacks saludables, ensaladas y postres. Fuente de fibra y antioxidantes.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="manzanas-fuji">
+                                    <option value="kg">Precio por kg: $8.500</option>
+                                    <option value="lb">Precio por lb: $3.856</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$8.500/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-manzanas-fuji">$8.500/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$11.300/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Manzanas Fuji (Oferta)" data-price="8500" data-image="frutas%20y%20verduras/manzana.jpg">
+                                <button class="add-to-cart" data-product="Manzanas Fuji (Oferta)" data-price="8500" data-unit="kg" data-image="frutas%20y%20verduras/manzana.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -973,13 +996,18 @@
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Tomates Cherry</h3>
                             <p class="product-description text-gray-600">Tomates pequeños, dulces y perfectos para ensaladas. Rico en licopeno y vitaminas esenciales.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="tomates-cherry">
+                                    <option value="kg">Precio por kg: $6.200</option>
+                                    <option value="lb">Precio por lb: $2.812</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$6.200/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-tomates-cherry">$6.200/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$9.500/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Tomates Cherry (Oferta)" data-price="6200" data-image="frutas%20y%20verduras/tomates%20cherry.jpg">
+                                <button class="add-to-cart" data-product="Tomates Cherry (Oferta)" data-price="6200" data-unit="kg" data-image="frutas%20y%20verduras/tomates%20cherry.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -999,67 +1027,82 @@
                                     <span class="text-gray-400 text-sm line-through ml-2">$5.600/unidad</span>
                                     <p class="text-sm text-gray-500">Precio por unidad</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Piña Oro Miel (Oferta)" data-price="4500" data-image="frutas%20y%20verduras/piña%20oro%20miel.jpg">
+                                <button class="add-to-cart" data-product="Piña Oro Miel (Oferta)" data-price="4500" data-unit="unidad" data-image="frutas%20y%20verduras/piña%20oro%20miel.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 4 - Peras -->
+                    <!-- Producto 4 - Peras Packham's -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">15% OFF</div>
                         <img src="frutas%20y%20verduras/peras.jpg" alt="Peras" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Peras Packham's</h3>
                             <p class="product-description text-gray-600">Peras jugosas y dulces con textura mantecosa. Excelente fuente de fibra dietética y vitamina C.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="peras-packhams">
+                                    <option value="kg">Precio por kg: $7.800</option>
+                                    <option value="lb">Precio por lb: $3.538</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$7.800/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-peras-packhams">$7.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$9.200/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Peras Packham's (Oferta)" data-price="7800" data-image="frutas%20y%20verduras/peras.jpg">
+                                <button class="add-to-cart" data-product="Peras Packham's (Oferta)" data-price="7800" data-unit="kg" data-image="frutas%20y%20verduras/peras.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 5 - Mandarinas -->
+                    <!-- Producto 5 - Mandarinas Satsuma -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">30% OFF</div>
                         <img src="frutas%20y%20verduras/mandarina%20satsuma.jpg" alt="Mandarinas" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Mandarinas Satsuma</h3>
                             <p class="product-description text-gray-600">Mandarinas dulces y fáciles de pelar, sin semillas. Perfectas como snack saludable para niños y adultos.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="mandarinas-satsuma">
+                                    <option value="kg">Precio por kg: $4.500</option>
+                                    <option value="lb">Precio por lb: $2.041</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$4.500/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-mandarinas-satsuma">$4.500/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$6.400/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Mandarinas Satsuma (Oferta)" data-price="4500" data-image="frutas%20y%20verduras/mandarina%20satsuma.jpg">
+                                <button class="add-to-cart" data-product="Mandarinas Satsuma (Oferta)" data-price="4500" data-unit="kg" data-image="frutas%20y%20verduras/mandarina%20satsuma.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 6 - Bananos -->
+                    <!-- Producto 6 - Bananos Cavendish -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">20% OFF</div>
                         <img src="frutas%20y%20verduras/bananos.jpg" alt="Bananos" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Bananos Cavendish</h3>
                             <p class="product-description text-gray-600">Bananos dulces y cremosos, ricos en potasio y energía natural. Perfectos para desayunos y snacks.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="bananos-cavendish">
+                                    <option value="kg">Precio por kg: $3.200</option>
+                                    <option value="lb">Precio por lb: $1.451</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$3.200/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-bananos-cavendish">$3.200/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$4.000/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Bananos Cavendish (Oferta)" data-price="3200" data-image="frutas%20y%20verduras/bananos.jpg">
+                                <button class="add-to-cart" data-product="Bananos Cavendish (Oferta)" data-price="3200" data-unit="kg" data-image="frutas%20y%20verduras/bananos.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1078,7 +1121,7 @@
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    <!-- Producto 1 - Pepinos -->
+                    <!-- Producto 1 - Pepinos Holandeses -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">25% OFF</div>
                         <img src="frutas%20y%20verduras/pepinos%20holandeses.jpg" alt="Pepinos" class="w-full h-56 object-cover">
@@ -1091,34 +1134,39 @@
                                     <span class="text-gray-400 text-sm line-through ml-2">$3.300/unidad</span>
                                     <p class="text-sm text-gray-500">Precio por unidad</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Pepinos Holandeses (Oferta)" data-price="2500" data-image="frutas%20y%20verduras/pepinos%20holandeses.jpg">
+                                <button class="add-to-cart" data-product="Pepinos Holandeses (Oferta)" data-price="2500" data-unit="unidad" data-image="frutas%20y%20verduras/pepinos%20holandeses.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 2 - Calabacines -->
+                    <!-- Producto 2 - Calabacines Italianos -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">30% OFF</div>
                         <img src="frutas%20y%20verduras/calabacin.jpg" alt="Calabacines" class="w-full h-56 object-cover">
                         <div class="p-5">
                             <h3 class="font-bold text-xl mb-2">Calabacines Italianos</h3>
                             <p class="product-description text-gray-600">Calabacines tiernos y versátiles, perfectos para salteados, guisos y como sustituto saludable de la pasta.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="calabacines-italianos">
+                                    <option value="kg">Precio por kg: $3.800</option>
+                                    <option value="lb">Precio por lb: $1.724</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="font-bold text-orange-700 text-lg">$3.800/kg</span>
+                                    <span class="font-bold text-orange-700 text-lg" id="price-calabacines-italianos">$3.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$5.400/kg</span>
-                                    <p class="text-sm text-gray-500">Precio por kilo</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Calabacines Italianos (Oferta)" data-price="3800" data-image="frutas%20y%20verduras/calabacin.jpg">
+                                <button class="add-to-cart" data-product="Calabacines Italianos (Oferta)" data-price="3800" data-unit="kg" data-image="frutas%20y%20verduras/calabacin.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 3 - Cebollín -->
+                    <!-- Producto 3 - Cebollín Fresco -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">15% OFF</div>
                         <img src="frutas%20y%20verduras/cebollin.jpg" alt="Cebollín" class="w-full h-56 object-cover">
@@ -1131,7 +1179,7 @@
                                     <span class="text-gray-400 text-sm line-through ml-2">$1.400/atado</span>
                                     <p class="text-sm text-gray-500">Precio por atado</p>
                                 </div>
-                                <button class="add-to-cart" data-product="Cebollín Fresco (Oferta)" data-price="1200" data-image="frutas%20y%20verduras/cebollin.jpg">
+                                <button class="add-to-cart" data-product="Cebollín Fresco (Oferta)" data-price="1200" data-unit="unidad" data-image="frutas%20y%20verduras/cebollin.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1264,6 +1312,7 @@
     <script>
         // Variables globales
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         const cartButton = document.getElementById('cart-button');
         const closeCart = document.getElementById('close-cart');
         const cartSidebar = document.getElementById('cart-sidebar');
@@ -1304,15 +1353,43 @@
             });
         });
 
+        // Selectores de unidad en productos (solo para productos que no son por unidad)
+        document.querySelectorAll('.unit-selector').forEach(selector => {
+            selector.addEventListener('change', function () {
+                const productId = this.dataset.product;
+                const selectedUnit = this.value;
+                const priceElement = document.getElementById(`price-${productId}`);
+                const addButton = priceElement?.closest('.product-card').querySelector('.add-to-cart');
+
+                if (addButton && priceElement) {
+                    const basePrice = parseFloat(addButton.dataset.price);
+
+                    if (selectedUnit === 'kg') {
+                        // Mostrar precio en kg
+                        priceElement.textContent = `$${basePrice.toLocaleString('es-CO')}/kg`;
+                        addButton.dataset.unit = 'kg';
+                        addButton.dataset.displayPrice = basePrice;
+                    } else if (selectedUnit === 'lb') {
+                        // Convertir a libras (1 kg = 2.20462 lb)
+                        const pricePerLb = Math.round(basePrice / 2.20462);
+                        priceElement.textContent = `$${pricePerLb.toLocaleString('es-CO')}/lb`;
+                        addButton.dataset.unit = 'lb';
+                        addButton.dataset.displayPrice = pricePerLb;
+                    }
+                }
+            });
+        });
+
         // Añadir productos al carrito
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', (e) => {
                 const product = e.target.dataset.product;
-                const price = parseFloat(e.target.dataset.price);
+                const price = parseFloat(e.target.dataset.displayPrice || e.target.dataset.price);
+                const unit = e.target.dataset.unit || 'unidad';
                 const image = e.target.dataset.image;
 
                 // Verificar si el producto ya está en el carrito
-                const existingProduct = cart.find(item => item.name === product);
+                const existingProduct = cart.find(item => item.name === product && item.unit === unit);
 
                 if (existingProduct) {
                     existingProduct.quantity += 1;
@@ -1321,6 +1398,7 @@
                         name: product,
                         price: price,
                         quantity: 1,
+                        unit: unit,
                         image: image
                     });
                 }
@@ -1371,34 +1449,44 @@
                 const cartItem = document.createElement('div');
                 cartItem.className = 'cart-item';
                 cartItem.innerHTML = `
-                                    <div class="flex justify-between items-start">
-                                        <div class="flex items-start">
-                                            <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
-                                            <div>
-                                                <h4 class="font-semibold text-lg">${item.name}</h4>
-                                                <div class="flex items-center mt-1">
-                                                    <span class="text-sm text-gray-600 mr-2">Precio:</span>
-                                                    <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
-                                                </div>
+                                <div class="flex justify-between items-start">
+                                    <div class="flex items-start">
+                                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-lg mr-3">
+                                        <div>
+                                            <h4 class="font-semibold text-lg">${item.name}</h4>
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-sm text-gray-600 mr-2">Precio:</span>
+                                                <span class="font-bold text-orange-600">${formatPrice(item.price)}/${item.unit}</span>
                                             </div>
+                                            ${item.unit !== 'unidad' ? `
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-sm text-gray-600 mr-2">Unidad:</span>
+                                                <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
+                                                    <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                                                    <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
+                                                    <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
+                                                </select>
+                                            </div>
+                                            ` : ''}
                                         </div>
-                                        <button class="remove-item text-lg" data-index="${index}">
-                                            <i class="fas fa-times"></i>
+                                    </div>
+                                    <button class="remove-item text-lg" data-index="${index}">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <div class="flex justify-between items-center mt-3">
+                                    <div class="quantity-controls">
+                                        <button class="quantity-btn decrease-quantity" data-index="${index}">
+                                            <i class="fas fa-minus"></i>
+                                        </button>
+                                        <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
+                                        <button class="quantity-btn increase-quantity" data-index="${index}">
+                                            <i class="fas fa-plus"></i>
                                         </button>
                                     </div>
-                                    <div class="flex justify-between items-center mt-3">
-                                        <div class="quantity-controls">
-                                            <button class="quantity-btn decrease-quantity" data-index="${index}">
-                                                <i class="fas fa-minus"></i>
-                                            </button>
-                                            <input type="number" min="1" value="${item.quantity}" class="quantity-input" data-index="${index}">
-                                            <button class="quantity-btn increase-quantity" data-index="${index}">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        </div>
-                                        <span class="font-bold text-lg">${formatPrice(itemTotal)}</span>
-                                    </div>
-                                `;
+                                    <span class="font-bold text-lg">${formatPrice(itemTotal)}</span>
+                                </div>
+                            `;
 
                 cartItems.appendChild(cartItem);
             });
@@ -1406,7 +1494,7 @@
             // Actualizar total
             cartTotal.textContent = formatPrice(total);
 
-            // Añadir event listeners a los botones de cantidad y eliminar
+            // Añadir event listeners a los botones de cantidad, eliminar y cambio de unidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1451,17 +1539,47 @@
                 });
             });
 
+            // Event listeners para cambio de unidad en el carrito (solo para productos que no son por unidad)
+            document.querySelectorAll('.unit-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    const newUnit = e.target.value;
+
+                    // Solo permitir cambio de unidad si no es "unidad"
+                    if (newUnit !== 'unidad') {
+                        // Convertir precio según la nueva unidad
+                        if (newUnit === 'kg' && cart[index].unit === 'lb') {
+                            // Convertir de lb a kg
+                            cart[index].price = Math.round(cart[index].price * 2.20462);
+                        } else if (newUnit === 'lb' && cart[index].unit === 'kg') {
+                            // Convertir de kg a lb
+                            cart[index].price = Math.round(cart[index].price / 2.20462);
+                        }
+
+                        cart[index].unit = newUnit;
+                        updateCart();
+                    } else {
+                        // Si intentan cambiar a unidad, revertir al valor anterior
+                        e.target.value = cart[index].unit;
+                    }
+                });
+            });
+
             // GUARDAR CARRITO EN LOCALSTORAGE
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         // Finalizar compra
         checkoutButton.addEventListener('click', () => {
-            alert('¡Gracias por tu compra! Total: ' + cartTotal.textContent);
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCart();
-            cartSidebar.classList.add('translate-x-full');
+            // Verificar si hay productos en el carrito
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega algunos productos antes de finalizar la compra.');
+                return;
+            }
+
+            // Redirigir a la página de pago
+            window.location.href = 'pago.html';
         });
 
         // Navegación entre categorías
@@ -1527,10 +1645,10 @@
         });
 
         // Verificar estado al cargar la página
-        document.addEventListener('DOMContentLoaded', checkAuthStatus);
-
-        // Inicializar carrito
-        updateCart();
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuthStatus();
+            updateCart();
+        });
     </script>
 </body>
 </html>

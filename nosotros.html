@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -772,6 +772,24 @@
             margin-bottom: 1rem;
         }
 
+        /* Estilos para selectores de unidad en productos */
+        .unit-selector {
+            background-color: #fef3c7;
+            color: #ea580c;
+            border: 1px solid #fdba74;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+            .unit-selector:focus {
+                outline: none;
+                border-color: #f97316;
+            }
+
         /* Estilos específicos para nosotros.html */
         .banner-nosotros {
             position: relative;
@@ -1255,6 +1273,7 @@
     <script>
         // Variables globales
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         const cartButton = document.getElementById('cart-button');
         const closeCart = document.getElementById('close-cart');
         const cartSidebar = document.getElementById('cart-sidebar');
@@ -1294,6 +1313,69 @@
                 mobileMenu.classList.remove('open');
             });
         });
+
+        // Selectores de unidad en productos (solo para productos que no son por unidad)
+        document.querySelectorAll('.unit-selector').forEach(selector => {
+            selector.addEventListener('change', function () {
+                const productId = this.dataset.product;
+                const selectedUnit = this.value;
+                const priceElement = document.getElementById(`price-${productId}`);
+                const addButton = priceElement?.closest('.product-card').querySelector('.add-to-cart');
+
+                if (addButton && priceElement) {
+                    const basePrice = parseFloat(addButton.dataset.price);
+
+                    if (selectedUnit === 'kg') {
+                        // Mostrar precio en kg
+                        priceElement.textContent = `$${basePrice.toLocaleString('es-CO')}/kg`;
+                        addButton.dataset.unit = 'kg';
+                        addButton.dataset.displayPrice = basePrice;
+                    } else if (selectedUnit === 'lb') {
+                        // Convertir a libras (1 kg = 2.20462 lb)
+                        const pricePerLb = Math.round(basePrice / 2.20462);
+                        priceElement.textContent = `$${pricePerLb.toLocaleString('es-CO')}/lb`;
+                        addButton.dataset.unit = 'lb';
+                        addButton.dataset.displayPrice = pricePerLb;
+                    }
+                }
+            });
+        });
+
+        // Añadir productos al carrito
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const product = e.target.dataset.product;
+                const price = parseFloat(e.target.dataset.displayPrice || e.target.dataset.price);
+                const unit = e.target.dataset.unit || 'unidad';
+                const image = e.target.dataset.image;
+
+                // Verificar si el producto ya está en el carrito
+                const existingProduct = cart.find(item => item.name === product && item.unit === unit);
+
+                if (existingProduct) {
+                    existingProduct.quantity += 1;
+                } else {
+                    cart.push({
+                        name: product,
+                        price: price,
+                        quantity: 1,
+                        unit: unit,
+                        image: image
+                    });
+                }
+
+                updateCart();
+                showNotification();
+            });
+        });
+
+        // Mostrar notificación de producto añadido
+        function showNotification() {
+            notification.style.display = 'block';
+            setTimeout(() => {
+                notification.style.display = 'none';
+            }, 3000);
+        }
 
         // Función para formatear precios en COP
         function formatPrice(price) {
@@ -1335,8 +1417,18 @@
                                             <h4 class="font-semibold text-lg">${item.name}</h4>
                                             <div class="flex items-center mt-1">
                                                 <span class="text-sm text-gray-600 mr-2">Precio:</span>
-                                                <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
+                                                <span class="font-bold text-orange-600">${formatPrice(item.price)}/${item.unit}</span>
                                             </div>
+                                            ${item.unit !== 'unidad' ? `
+                                            <div class="flex items-center mt-1">
+                                                <span class="text-sm text-gray-600 mr-2">Unidad:</span>
+                                                <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
+                                                    <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                                                    <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
+                                                    <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
+                                                </select>
+                                            </div>
+                                            ` : ''}
                                         </div>
                                     </div>
                                     <button class="remove-item text-lg" data-index="${index}">
@@ -1363,7 +1455,7 @@
             // Actualizar total
             cartTotal.textContent = formatPrice(total);
 
-            // Añadir event listeners a los botones de cantidad y eliminar
+            // Añadir event listeners a los botones de cantidad, eliminar y cambio de unidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1408,17 +1500,65 @@
                 });
             });
 
+            // Event listeners para cambio de unidad en el carrito (solo para productos que no son por unidad)
+            document.querySelectorAll('.unit-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    const newUnit = e.target.value;
+
+                    // Solo permitir cambio de unidad si no es "unidad"
+                    if (newUnit !== 'unidad') {
+                        // Convertir precio según la nueva unidad
+                        if (newUnit === 'kg' && cart[index].unit === 'lb') {
+                            // Convertir de lb a kg
+                            cart[index].price = Math.round(cart[index].price * 2.20462);
+                        } else if (newUnit === 'lb' && cart[index].unit === 'kg') {
+                            // Convertir de kg a lb
+                            cart[index].price = Math.round(cart[index].price / 2.20462);
+                        }
+
+                        cart[index].unit = newUnit;
+                        updateCart();
+                    } else {
+                        // Si intentan cambiar a unidad, revertir al valor anterior
+                        e.target.value = cart[index].unit;
+                    }
+                });
+            });
+
             // GUARDAR CARRITO EN LOCALSTORAGE
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         // Finalizar compra
         checkoutButton.addEventListener('click', () => {
-            alert('¡Gracias por tu compra! Total: ' + cartTotal.textContent);
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCart();
-            cartSidebar.classList.add('translate-x-full');
+            // Verificar si hay productos en el carrito
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega algunos productos antes de finalizar la compra.');
+                return;
+            }
+
+            // Redirigir a la página de pago
+            window.location.href = 'pago.html';
+        });
+
+        // Navegación one page
+        document.querySelectorAll('.one-page-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId.startsWith('#')) {
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        // Desplazamiento suave
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
         });
 
         // Navegación entre categorías
@@ -1484,10 +1624,10 @@
         });
 
         // Verificar estado al cargar la página
-        document.addEventListener('DOMContentLoaded', checkAuthStatus);
-
-        // Inicializar carrito
-        updateCart();
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuthStatus();
+            updateCart();
+        });
     </script>
 </body>
 </html>

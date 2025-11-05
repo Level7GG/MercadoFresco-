@@ -1,0 +1,499 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Términos y Condiciones - Mercado Fresco</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Importar fuente Poppins de Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Aplicar la nueva tipografía */
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 18px;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2.25rem; /* 36px */
+        }
+
+        h3 {
+            font-size: 1.875rem; /* 30px */
+        }
+
+        /* Fondo general para toda la página con filtro naranja */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('frutas%20y%20verduras/fondo.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            opacity: 0.2;
+            z-index: -1;
+            /* Aplicar filtro naranja */
+            filter: sepia(0.5) saturate(2) hue-rotate(-10deg);
+        }
+
+        /* Barra de navegación naranja con difuminado mejorado */
+        .nav-header {
+            background-color: #f97316; /* Naranja */
+            position: relative;
+            overflow: visible;
+        }
+
+            .nav-header::after {
+                content: '';
+                position: absolute;
+                bottom: -60px;
+                left: 0;
+                width: 100%;
+                height: 60px;
+                background: linear-gradient(to bottom, rgba(249, 115, 22, 0.8) 0%, rgba(249, 115, 22, 0.6) 20%, rgba(249, 115, 22, 0.4) 40%, rgba(249, 115, 22, 0.2) 60%, rgba(249, 115, 22, 0.1) 80%, transparent 100%);
+                z-index: 1;
+                pointer-events: none;
+            }
+
+        .section-hidden {
+            display: none;
+        }
+
+        .section-visible {
+            display: block;
+        }
+
+        /* LOGO RESPONSIVE - CORREGIDO Y MÁS PEQUEÑO EN MÓVILES */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 70px; /* Tamaño base para desktop */
+            width: auto;
+            object-fit: contain;
+        }
+
+        @media (max-width: 1024px) {
+            .logo-img {
+                height: 60px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .logo-img {
+                height: 50px; /* Reducido significativamente para tablets */
+            }
+        }
+
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 35px; /* Más pequeño en móviles */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-img {
+                height: 30px; /* Aún más pequeño en móviles pequeños */
+            }
+        }
+
+        /* BOTONES DE AUTENTICACIÓN - CORREGIDOS */
+        .auth-button {
+            background-color: #ea580c;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9rem;
+            white-space: nowrap;
+        }
+
+        @media (max-width: 768px) {
+            .auth-button {
+                padding: 6px 12px;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .auth-button {
+                padding: 5px 10px;
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .auth-button {
+                padding: 4px 8px;
+                font-size: 0.75rem;
+            }
+        }
+
+        .auth-button-secondary {
+            background-color: white;
+            color: #ea580c;
+            border: 2px solid #ea580c;
+        }
+
+            .auth-button-secondary:hover {
+                background-color: #fef3c7; /* Amarillo claro */
+            }
+
+        /* CONTENEDOR DE BOTONES - CORREGIDO */
+        .nav-buttons-container {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons-container {
+                gap: 0.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .nav-buttons-container {
+                gap: 0.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-buttons-container {
+                gap: 0.3rem;
+            }
+        }
+
+        /* Nuevos estilos para el footer */
+        .footer-section {
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            color: white;
+        }
+
+        /* Estilos para pestañas de términos y privacidad */
+        .tab-button {
+            transition: all 0.3s ease;
+        }
+
+            .tab-button.active {
+                background-color: #f97316 !important;
+                color: white !important;
+            }
+
+        .content-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .back-button {
+            background-color: #f97316;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+            .back-button:hover {
+                background-color: #ea580c;
+                transform: translateY(-2px);
+            }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header y Navegación -->
+    <header class="nav-header text-white sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="logo-container">
+                <img src="frutas%20y%20verduras/Logo.png" alt="Mercado Fresco" class="logo-img">
+            </div>
+
+            <div class="nav-buttons-container">
+                <a href="login.html" class="auth-button auth-button-secondary">
+                    <i class="fas fa-arrow-left mr-2"></i>Volver al Registro
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="py-12 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <!-- Encabezado -->
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-orange-700 mb-4">Términos Legales</h1>
+                <p class="text-gray-600 text-lg">Conoce nuestros términos y políticas para una mejor experiencia</p>
+            </div>
+
+            <!-- Pestañas de Navegación -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button id="terms-tab" class="tab-button active bg-orange-600 text-white px-6 py-3 rounded-lg font-medium">
+                    <i class="fas fa-file-contract mr-2"></i>Términos y Condiciones
+                </button>
+                <button id="privacy-tab" class="tab-button bg-orange-100 text-orange-800 px-6 py-3 rounded-lg font-medium">
+                    <i class="fas fa-shield-alt mr-2"></i>Política de Privacidad
+                </button>
+            </div>
+
+            <!-- Contenido de Términos y Condiciones -->
+            <section id="terms-content" class="content-section section-visible">
+                <h2 class="text-3xl font-bold text-orange-800 mb-6">Términos y Condiciones de Uso</h2>
+                <p class="text-gray-600 mb-6">Última actualización: 1 de Enero, 2023</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">1. Aceptación de los Términos</h3>
+                        <p class="text-gray-600">Al acceder y utilizar el sitio web de Mercado Fresco, usted acepta estar sujeto a estos Términos y Condiciones de Uso, todas las leyes y regulaciones aplicables, y acepta que es responsable del cumplimiento de las leyes locales aplicables.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">2. Uso de Licencia</h3>
+                        <p class="text-gray-600">Se concede permiso para descargar temporalmente una copia de los materiales (información o software) en el sitio web de Mercado Fresco solo para visualización personal transitoria. Esta es la concesión de una licencia, no una transferencia de título.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">3. Registro de Cuenta</h3>
+                        <p class="text-gray-600">Para realizar compras en nuestro sitio, deberá registrarse proporcionando información veraz, exacta y completa. Usted es responsable de mantener la confidencialidad de su cuenta y contraseña y de restringir el acceso a su computadora.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">4. Productos y Servicios</h3>
+                        <p class="text-gray-600">Todos los productos y servicios están sujetos a disponibilidad. Nos reservamos el derecho de discontinuar cualquier producto en cualquier momento. Los precios de nuestros productos están sujetos a cambio sin aviso.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">5. Política de Devoluciones y Reembolsos</h3>
+                        <p class="text-gray-600">Aceptamos devoluciones dentro de los 7 días siguientes a la recepción de su pedido. Los productos deben estar en su condición original, sin abrir y en su empaque original. Los gastos de envío de devolución corren por cuenta del cliente.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">6. Propiedad Intelectual</h3>
+                        <p class="text-gray-600">Todo el contenido incluido en este sitio, como texto, gráficos, logotipos, imágenes, así como el compilación del mismo, es propiedad de Mercado Fresco o de sus proveedores de contenido y está protegido por las leyes de derechos de autor.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">7. Limitación de Responsabilidad</h3>
+                        <p class="text-gray-600">En ningún caso Mercado Fresco, ni sus directores, empleados o afiliados, serán responsables por daños indirectos, incidentales, especiales, consecuentes o punitivos, incluidos, entre otros, la pérdida de beneficios, datos o uso.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">8. Modificaciones</h3>
+                        <p class="text-gray-600">Mercado Fresco puede revisar estos Términos de servicio para su sitio web en cualquier momento sin previo aviso. Al usar este sitio web, usted acepta estar sujeto a la versión actual de estos Términos y Condiciones de Uso.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">9. Ley Aplicable</h3>
+                        <p class="text-gray-600">Estos términos y condiciones se rigen e interpretan de acuerdo con las leyes de Colombia, y usted se somete irrevocablemente a la jurisdicción exclusiva de los tribunales en ese estado o ubicación.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contenido de Política de Privacidad -->
+            <section id="privacy-content" class="content-section section-hidden">
+                <h2 class="text-3xl font-bold text-orange-800 mb-6">Política de Privacidad</h2>
+                <p class="text-gray-600 mb-6">Última actualización: 1 de Enero, 2023</p>
+
+                <div class="space-y-6">
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">1. Información que Recopilamos</h3>
+                        <p class="text-gray-600">Recopilamos información que usted nos proporciona directamente, incluyendo:</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
+                            <li>Información de contacto (nombre, dirección de correo electrónico, número de teléfono)</li>
+                            <li>Información de perfil (nombre de usuario, contraseña, preferencias)</li>
+                            <li>Información de pago (datos de tarjetas de crédito/débito, información de facturación)</li>
+                            <li>Información de transacciones (historial de compras, productos adquiridos)</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">2. Uso de la Información</h3>
+                        <p class="text-gray-600">Utilizamos la información que recopilamos para:</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
+                            <li>Proporcionar, operar y mantener nuestros servicios</li>
+                            <li>Procesar sus transacciones y enviar información relacionada</li>
+                            <li>Enviar comunicaciones administrativas, como confirmaciones de pedidos y actualizaciones de cuenta</li>
+                            <li>Responder a sus comentarios, preguntas y solicitudes de servicio al cliente</li>
+                            <li>Comunicarnos con usted sobre productos, servicios, ofertas y eventos</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">3. Compartir Información</h3>
+                        <p class="text-gray-600">No vendemos, comercializamos ni transferimos de otro modo a terceros su información personal identificable. Esto no incluye a terceros de confianza que nos ayudan a operar nuestro sitio web, realizar nuestro negocio o prestarle servicios, siempre que esas partes acepten mantener esta información confidencial.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">4. Seguridad</h3>
+                        <p class="text-gray-600">Implementamos una variedad de medidas de seguridad para mantener la seguridad de su información personal. Utilizamos el cifrado para proteger la información confidencial transmitida en línea. También protegemos su información fuera de línea.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">5. Cookies</h3>
+                        <p class="text-gray-600">Utilizamos cookies para comprender y guardar sus preferencias para futuras visitas y compilar datos agregados sobre el tráfico del sitio y la interacción del sitio para que podamos ofrecer mejores experiencias y herramientas en el futuro.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">6. Sus Derechos</h3>
+                        <p class="text-gray-600">Usted tiene derecho a:</p>
+                        <ul class="list-disc list-inside text-gray-600 mt-2 space-y-1">
+                            <li>Acceder a la información personal que tenemos sobre usted</li>
+                            <li>Solicitar que corrijamos cualquier información personal inexacta</li>
+                            <li>Solicitar que eliminemos su información personal</li>
+                            <li>Oponerse al procesamiento de su información personal</li>
+                            <li>Solicitar la transferencia de su información personal a otro organismo</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">7. Cambios a Nuestra Política de Privacidad</h3>
+                        <p class="text-gray-600">Nos reservamos el derecho de actualizar o cambiar nuestra Política de Privacidad en cualquier momento y usted debe verificar esta Política de Privacidad periódicamente. Su uso continuado del Servicio después de que publiquemos cualquier modificación en la Política de Privacidad en esta página constituirá su reconocimiento de las modificaciones.</p>
+                    </div>
+
+                    <div>
+                        <h3 class="text-xl font-semibold text-orange-700 mb-3">8. Contacto</h3>
+                        <p class="text-gray-600">Si tiene alguna pregunta sobre esta Política de Privacidad, por favor contáctenos:</p>
+                        <ul class="list-none text-gray-600 mt-2 space-y-1">
+                            <li><i class="fas fa-envelope mr-2 text-orange-600"></i> privacidad@mercadofresco.com</li>
+                            <li><i class="fas fa-phone mr-2 text-orange-600"></i> (123) 456-7890</li>
+                            <li><i class="fas fa-map-marker-alt mr-2 text-orange-600"></i> Calle Principal #123, Ciudad</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Botón de regreso -->
+            <div class="text-center mt-8">
+                <a href="login.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i> Volver al Registro
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer único -->
+    <footer class="footer-section py-12 px-4 mt-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div>
+                <h3 class="text-xl font-bold mb-4">Mercado Fresco</h3>
+                <p class="mb-4">Tu tienda de confianza para frutas y verduras frescas directamente del campo a tu hogar.</p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-orange-200 hover:text-white"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Enlaces Rápidos</h3>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="hover:text-orange-200">Inicio</a></li>
+                    <li><a href="frutas.html" class="hover:text-orange-200">Frutas</a></li>
+                    <li><a href="verduras.html" class="hover:text-orange-200">Verduras</a></li>
+                    <li><a href="ofertas.html" class="hover:text-orange-200">Ofertas</a></li>
+                    <li><a href="nosotros.html" class="hover:text-orange-200">Nosotros</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Contáctanos</h3>
+                <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> Calle Principal #123, Ciudad</p>
+                <p class="mb-2"><i class="fas fa-phone mr-2"></i> (123) 456-7890</p>
+                <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@mercadofresco.com</p>
+            </div>
+
+            <div>
+                <h3 class="text-xl font-bold mb-4">Horario de Atención</h3>
+                <p class="mb-2">Lunes a Viernes: 8:00 AM - 8:00 PM</p>
+                <p class="mb-2">Sábados: 9:00 AM - 6:00 PM</p>
+                <p class="mb-2">Domingos: 10:00 AM - 4:00 PM</p>
+            </div>
+        </div>
+
+        <div class="container mx-auto mt-8 pt-6 border-t border-orange-300 text-center">
+            <p>&copy; 2023 Mercado Fresco. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Función para obtener parámetros de la URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Elementos de las pestañas
+        const termsTab = document.getElementById('terms-tab');
+        const privacyTab = document.getElementById('privacy-tab');
+        const termsContent = document.getElementById('terms-content');
+        const privacyContent = document.getElementById('privacy-content');
+
+        // Función para mostrar la pestaña de Términos
+        function showTermsTab() {
+            termsTab.classList.add('active', 'bg-orange-600', 'text-white');
+            termsTab.classList.remove('bg-orange-100', 'text-orange-800');
+            privacyTab.classList.remove('active', 'bg-orange-600', 'text-white');
+            privacyTab.classList.add('bg-orange-100', 'text-orange-800');
+            termsContent.classList.remove('section-hidden');
+            termsContent.classList.add('section-visible');
+            privacyContent.classList.add('section-hidden');
+            privacyContent.classList.remove('section-visible');
+
+            // Actualizar el título de la página
+            document.title = 'Términos y Condiciones - Mercado Fresco';
+        }
+
+        // Función para mostrar la pestaña de Privacidad
+        function showPrivacyTab() {
+            privacyTab.classList.add('active', 'bg-orange-600', 'text-white');
+            privacyTab.classList.remove('bg-orange-100', 'text-orange-800');
+            termsTab.classList.remove('active', 'bg-orange-600', 'text-white');
+            termsTab.classList.add('bg-orange-100', 'text-orange-800');
+            privacyContent.classList.remove('section-hidden');
+            privacyContent.classList.add('section-visible');
+            termsContent.classList.add('section-hidden');
+            termsContent.classList.remove('section-visible');
+
+            // Actualizar el título de la página
+            document.title = 'Política de Privacidad - Mercado Fresco';
+        }
+
+        // Event listeners para las pestañas
+        termsTab.addEventListener('click', showTermsTab);
+        privacyTab.addEventListener('click', showPrivacyTab);
+
+        // Mostrar la pestaña correspondiente según el parámetro de la URL
+        document.addEventListener('DOMContentLoaded', function () {
+            const tipoParam = getQueryParam('tipo');
+
+            if (tipoParam === 'privacidad') {
+                showPrivacyTab();
+            } else {
+                showTermsTab(); // Por defecto mostrar términos
+            }
+        });
+    </script>
+</body>
+</html>

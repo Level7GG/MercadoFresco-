@@ -815,6 +815,24 @@
             color: #fed7aa;
             margin-bottom: 1rem;
         }
+
+        /* Estilos para selectores de unidad en productos */
+        .unit-selector {
+            background-color: #fef3c7;
+            color: #ea580c;
+            border: 1px solid #fdba74;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 8px;
+        }
+
+            .unit-selector:focus {
+                outline: none;
+                border-color: #f97316;
+            }
     </style>
 </head>
 <body class="bg-gray-50">
@@ -980,9 +998,15 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Mango de azucar</h4>
                             <p class="product-description text-gray-600">Dulce y jugoso mango importado, perfecto para batidos y postres.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="mango">
+                                    <option value="kg">Precio por kg: $9.000</option>
+                                    <option value="lb">Precio por lb: $4.082</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$9.000/kg</span>
-                                <button class="add-to-cart" data-product="Mango de azucar" data-price="9000" data-image="frutas%20y%20verduras/mango.jpg">
+                                <span class="font-bold text-orange-700" id="price-mango">$9.000/kg</span>
+                                <button class="add-to-cart" data-product="Mango de azucar" data-price="9000" data-unit="kg" data-image="frutas%20y%20verduras/mango.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -995,9 +1019,15 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Fresas</h4>
                             <p class="product-description text-gray-600">Fresas jugosas y dulces, perfectas para postres y mermeladas.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="fresas">
+                                    <option value="kg">Precio por kg: $12.000</option>
+                                    <option value="lb">Precio por lb: $5.443</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$12.000/kg</span>
-                                <button class="add-to-cart" data-product="Fresas" data-price="12000" data-image="frutas%20y%20verduras/fresas.jpg">
+                                <span class="font-bold text-orange-700" id="price-fresas">$12.000/kg</span>
+                                <button class="add-to-cart" data-product="Fresas" data-price="12000" data-unit="kg" data-image="frutas%20y%20verduras/fresas.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1010,9 +1040,15 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Naranjas Valencia</h4>
                             <p class="product-description text-gray-600">Naranjas jugosas y dulces, excelente fuente de vitamina C.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="naranjas">
+                                    <option value="kg">Precio por kg: $4.500</option>
+                                    <option value="lb">Precio por lb: $2.041</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$4.500/kg</span>
-                                <button class="add-to-cart" data-product="Naranjas Valencia" data-price="4500" data-image="frutas%20y%20verduras/naranjas%20valencia.jpg">
+                                <span class="font-bold text-orange-700" id="price-naranjas">$4.500/kg</span>
+                                <button class="add-to-cart" data-product="Naranjas Valencia" data-price="4500" data-unit="kg" data-image="frutas%20y%20verduras/naranjas%20valencia.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1034,9 +1070,15 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Tomates</h4>
                             <p class="product-description text-gray-600">Tomates dulces y perfectos para ensaladas.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="tomates">
+                                    <option value="kg">Precio por kg: $4.700</option>
+                                    <option value="lb">Precio por lb: $2.132</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$4.700/kg</span>
-                                <button class="add-to-cart" data-product="Tomates" data-price="4700" data-image="frutas%20y%20verduras/tomates.jpg">
+                                <span class="font-bold text-orange-700" id="price-tomates">$4.700/kg</span>
+                                <button class="add-to-cart" data-product="Tomates" data-price="4700" data-unit="kg" data-image="frutas%20y%20verduras/tomates.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1049,27 +1091,34 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Zanahorias</h4>
                             <p class="product-description text-gray-600">Zanahorias tiernas y dulces, ricas en vitamina A.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="zanahorias">
+                                    <option value="kg">Precio por kg: $4.600</option>
+                                    <option value="lb">Precio por lb: $2.087</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$4.600/kg</span>
-                                <button class="add-to-cart" data-product="Zanahorias" data-price="4600" data-image="frutas%20y%20verduras/zanahoria.jpg">
+                                <span class="font-bold text-orange-700" id="price-zanahorias">$4.600/kg</span>
+                                <button class="add-to-cart" data-product="Zanahorias" data-price="4600" data-unit="kg" data-image="frutas%20y%20verduras/zanahoria.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 3 -->
+                    <!-- Producto 3 - Lechuga Romana (solo por unidad) -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden">
                         <img src="frutas%20y%20verduras/lechuga romana.jpg" alt="Lechuga" class="w-full h-48 object-cover">
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Lechuga Romana</h4>
                             <p class="product-description text-gray-600">Lechuga crujiente y de hojas alargadas, perfecta para ensaladas.</p>
                             <div class="flex justify-between items-center">
-                                <span class="font-bold">$7.600/unidad</span>
-                                <button class="add-to-cart" data-product="Lechuga Romana" data-price="7600" data-image="frutas%20y%20verduras/lechuga romana.jpg">
+                                <span class="font-bold text-orange-700" id="price-lechuga">$7.600/unidad</span>
+                                <button class="add-to-cart" data-product="Lechuga Romana" data-price="7600" data-unit="unidad" data-image="frutas%20y%20verduras/lechuga romana.jpg">
                                     Añadir
                                 </button>
                             </div>
+                            <p class="text-sm text-gray-500 mt-1">Precio por unidad</p>
                         </div>
                     </div>
                 </div>
@@ -1089,19 +1138,25 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Plátanos Maduros</h4>
                             <p class="product-description text-gray-600">Plátanos perfectamente maduros, ideales para freír o hacer batidos.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="platanos">
+                                    <option value="kg">Precio por kg: $6.800</option>
+                                    <option value="lb">Precio por lb: $3.084</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$6.800/kg</span>
+                                    <span class="text-red-500 font-bold" id="price-platanos">$6.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$8.000/kg</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Plátanos Maduros" data-price="6800" data-image="frutas%20y%20verduras/platano maduro.jpg">
+                                <button class="add-to-cart" data-product="Plátanos Maduros" data-price="6800" data-unit="kg" data-image="frutas%20y%20verduras/platano maduro.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 2 -->
+                    <!-- Producto 2 - Brócoli Fresco (solo por unidad) -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">10% OFF</div>
                         <img src="frutas%20y%20verduras/brocoli.jpg" alt="Brócoli" class="w-full h-48 object-cover">
@@ -1110,13 +1165,14 @@
                             <p class="product-description text-gray-600">Brócoli fresco y crujiente, rico en vitamins y minerales.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$8.100/unidad</span>
+                                    <span class="text-red-500 font-bold" id="price-brocoli">$8.100/unidad</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$9.000/unidad</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Brócoli Fresco" data-price="8100" data-image="frutas%20y%20verduras/brocoli.jpg">
+                                <button class="add-to-cart" data-product="Brócoli Fresco" data-price="8100" data-unit="unidad" data-image="frutas%20y%20verduras/brocoli.jpg">
                                     Añadir
                                 </button>
                             </div>
+                            <p class="text-sm text-gray-500 mt-1">Precio por unidad</p>
                         </div>
                     </div>
 
@@ -1127,12 +1183,18 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Uvas Verdes</h4>
                             <p class="product-description text-gray-600">Uvas dulces y sin semillas, perfectas como snack saludable.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="uvas">
+                                    <option value="kg">Precio por kg: $28.800</option>
+                                    <option value="lb">Precio por lb: $13.063</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$28.800/kg</span>
+                                    <span class="text-red-500 font-bold" id="price-uvas">$28.800/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$36.000/kg</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Uvas Verdes" data-price="28800" data-image="frutas%20y%20verduras/uvas%20verdes.jpg">
+                                <button class="add-to-cart" data-product="Uvas Verdes" data-price="28800" data-unit="kg" data-image="frutas%20y%20verduras/uvas%20verdes.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1155,12 +1217,18 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Manzanas</h4>
                             <p class="product-description text-gray-600">Manzanas dulces y jugosas.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="manzanas">
+                                    <option value="kg">Precio por kg: $10.500</option>
+                                    <option value="lb">Precio por lb: $4.762</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$10.500/kg</span>
+                                    <span class="text-red-500 font-bold" id="price-manzanas">$10.500/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$15.000/kg</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Manzanas (Oferta)" data-price="10500" data-image="frutas%20y%20verduras/manzana.jpg">
+                                <button class="add-to-cart" data-product="Manzanas (Oferta)" data-price="10500" data-unit="kg" data-image="frutas%20y%20verduras/manzana.jpg">
                                     Añadir
                                 </button>
                             </div>
@@ -1174,19 +1242,25 @@
                         <div class="p-4">
                             <h4 class="font-bold text-lg mb-2">Tomates Cherry</h4>
                             <p class="product-description text-gray-600">Tomates pequeños, dulces y perfectos para ensaladas.</p>
+                            <div class="mb-2">
+                                <select class="unit-selector w-full" data-product="tomates-cherry">
+                                    <option value="kg">Precio por kg: $8.850</option>
+                                    <option value="lb">Precio por lb: $4.015</option>
+                                </select>
+                            </div>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$8.850/kg</span>
+                                    <span class="text-red-500 font-bold" id="price-tomates-cherry">$8.850/kg</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$11.800/kg</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Tomates Cherry (Oferta)" data-price="8850" data-image="frutas%20y%20verduras/tomates%20cherry.jpg">
+                                <button class="add-to-cart" data-product="Tomates Cherry (Oferta)" data-price="8850" data-unit="kg" data-image="frutas%20y%20verduras/tomates%20cherry.jpg">
                                     Añadir
                                 </button>
                             </div>
                         </div>
                     </div>
 
-                    <!-- Producto 3 -->
+                    <!-- Producto 3 - Piña Oro Miel (solo por unidad) -->
                     <div class="product-card bg-white rounded-lg shadow-md overflow-hidden relative">
                         <div class="discount-badge">35% OFF</div>
                         <img src="frutas%20y%20verduras/piña%20oro%20miel.jpg" alt="Piña Oro Miel" class="w-full h-48 object-cover">
@@ -1195,13 +1269,14 @@
                             <p class="product-description text-gray-600">Piña con un delicioso aroma, sabor y muy dulce.</p>
                             <div class="flex justify-between items-center">
                                 <div>
-                                    <span class="text-red-500 font-bold">$5.680/unidad</span>
+                                    <span class="text-red-500 font-bold" id="price-piña">$5.680/unidad</span>
                                     <span class="text-gray-400 text-sm line-through ml-2">$7.600/unidad</span>
                                 </div>
-                                <button class="add-to-cart" data-product="Piña Oro Miel (Oferta)" data-price="5680" data-image="frutas%20y%20verduras/piña%20oro%20miel.jpg">
+                                <button class="add-to-cart" data-product="Piña Oro Miel (Oferta)" data-price="5680" data-unit="unidad" data-image="frutas%20y%20verduras/piña%20oro%20miel.jpg">
                                     Añadir
                                 </button>
                             </div>
+                            <p class="text-sm text-gray-500 mt-1">Precio por unidad</p>
                         </div>
                     </div>
                 </div>
@@ -1360,6 +1435,7 @@
     <script>
         // Variables globales
         let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
         const cartButton = document.getElementById('cart-button');
         const closeCart = document.getElementById('close-cart');
         const cartSidebar = document.getElementById('cart-sidebar');
@@ -1400,15 +1476,43 @@
             });
         });
 
+        // Selectores de unidad en productos (solo para productos que no son por unidad)
+        document.querySelectorAll('.unit-selector').forEach(selector => {
+            selector.addEventListener('change', function () {
+                const productId = this.dataset.product;
+                const selectedUnit = this.value;
+                const priceElement = document.getElementById(`price-${productId}`);
+                const addButton = priceElement?.closest('.product-card').querySelector('.add-to-cart');
+
+                if (addButton && priceElement) {
+                    const basePrice = parseFloat(addButton.dataset.price);
+
+                    if (selectedUnit === 'kg') {
+                        // Mostrar precio en kg
+                        priceElement.textContent = `$${basePrice.toLocaleString('es-CO')}/kg`;
+                        addButton.dataset.unit = 'kg';
+                        addButton.dataset.displayPrice = basePrice;
+                    } else if (selectedUnit === 'lb') {
+                        // Convertir a libras (1 kg = 2.20462 lb)
+                        const pricePerLb = Math.round(basePrice / 2.20462);
+                        priceElement.textContent = `$${pricePerLb.toLocaleString('es-CO')}/lb`;
+                        addButton.dataset.unit = 'lb';
+                        addButton.dataset.displayPrice = pricePerLb;
+                    }
+                }
+            });
+        });
+
         // Añadir productos al carrito
         document.querySelectorAll('.add-to-cart').forEach(button => {
             button.addEventListener('click', (e) => {
                 const product = e.target.dataset.product;
-                const price = parseFloat(e.target.dataset.price);
+                const price = parseFloat(e.target.dataset.displayPrice || e.target.dataset.price);
+                const unit = e.target.dataset.unit || 'unidad';
                 const image = e.target.dataset.image;
 
                 // Verificar si el producto ya está en el carrito
-                const existingProduct = cart.find(item => item.name === product);
+                const existingProduct = cart.find(item => item.name === product && item.unit === unit);
 
                 if (existingProduct) {
                     existingProduct.quantity += 1;
@@ -1417,6 +1521,7 @@
                         name: product,
                         price: price,
                         quantity: 1,
+                        unit: unit,
                         image: image
                     });
                 }
@@ -1474,8 +1579,18 @@
                                         <h4 class="font-semibold text-lg">${item.name}</h4>
                                         <div class="flex items-center mt-1">
                                             <span class="text-sm text-gray-600 mr-2">Precio:</span>
-                                            <span class="font-bold text-orange-600">${formatPrice(item.price)}</span>
+                                            <span class="font-bold text-orange-600">${formatPrice(item.price)}/${item.unit}</span>
                                         </div>
+                                        ${item.unit !== 'unidad' ? `
+                                        <div class="flex items-center mt-1">
+                                            <span class="text-sm text-gray-600 mr-2">Unidad:</span>
+                                            <select class="unit-select border rounded px-2 py-1 text-sm" data-index="${index}">
+                                                <option value="kg" ${item.unit === 'kg' ? 'selected' : ''}>kg</option>
+                                                <option value="lb" ${item.unit === 'lb' ? 'selected' : ''}>lb</option>
+                                                <option value="unidad" ${item.unit === 'unidad' ? 'selected' : ''}>unidad</option>
+                                            </select>
+                                        </div>
+                                        ` : ''}
                                     </div>
                                 </div>
                                 <button class="remove-item text-lg" data-index="${index}">
@@ -1502,7 +1617,7 @@
             // Actualizar total
             cartTotal.textContent = formatPrice(total);
 
-            // Añadir event listeners a los botones de cantidad y eliminar
+            // Añadir event listeners a los botones de cantidad, eliminar y cambio de unidad
             document.querySelectorAll('.increase-quantity').forEach(button => {
                 button.addEventListener('click', (e) => {
                     e.stopPropagation();
@@ -1547,17 +1662,47 @@
                 });
             });
 
+            // Event listeners para cambio de unidad en el carrito (solo para productos que no son por unidad)
+            document.querySelectorAll('.unit-select').forEach(select => {
+                select.addEventListener('change', (e) => {
+                    e.stopPropagation();
+                    const index = parseInt(e.target.dataset.index);
+                    const newUnit = e.target.value;
+
+                    // Solo permitir cambio de unidad si no es "unidad"
+                    if (newUnit !== 'unidad') {
+                        // Convertir precio según la nueva unidad
+                        if (newUnit === 'kg' && cart[index].unit === 'lb') {
+                            // Convertir de lb a kg
+                            cart[index].price = Math.round(cart[index].price * 2.20462);
+                        } else if (newUnit === 'lb' && cart[index].unit === 'kg') {
+                            // Convertir de kg a lb
+                            cart[index].price = Math.round(cart[index].price / 2.20462);
+                        }
+
+                        cart[index].unit = newUnit;
+                        updateCart();
+                    } else {
+                        // Si intentan cambiar a unidad, revertir al valor anterior
+                        e.target.value = cart[index].unit;
+                    }
+                });
+            });
+
             // GUARDAR CARRITO EN LOCALSTORAGE
             localStorage.setItem('cart', JSON.stringify(cart));
         }
 
         // Finalizar compra
         checkoutButton.addEventListener('click', () => {
-            alert('¡Gracias por tu compra! Total: ' + cartTotal.textContent);
-            cart = [];
-            localStorage.removeItem('cart');
-            updateCart();
-            cartSidebar.classList.add('translate-x-full');
+            // Verificar si hay productos en el carrito
+            if (cart.length === 0) {
+                alert('Tu carrito está vacío. Agrega algunos productos antes de finalizar la compra.');
+                return;
+            }
+
+            // Redirigir a la página de pago
+            window.location.href = 'pago.html';
         });
 
         // Navegación one page
@@ -1606,10 +1751,10 @@
         });
 
         // Verificar estado al cargar la página
-        document.addEventListener('DOMContentLoaded', checkAuthStatus);
-
-        // Inicializar carrito
-        updateCart();
+        document.addEventListener('DOMContentLoaded', function () {
+            checkAuthStatus();
+            updateCart();
+        });
     </script>
 </body>
 </html>
